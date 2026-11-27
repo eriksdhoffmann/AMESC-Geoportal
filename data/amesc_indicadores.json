@@ -1,0 +1,1596 @@
+{
+  "regiao": "AMESC — Associação dos Municípios do Extremo Sul Catarinense",
+  "totais": {
+    "municipios": 15,
+    "pop_2022": 222182,
+    "pop_urbana": 180837,
+    "pop_rural": 41345,
+    "domicilios_2022": 82785,
+    "area_km2": 2967.37,
+    "pib_total_mil": 9449395.0,
+    "cnes_ativos": 774,
+    "densidade_2022": 74.88,
+    "pib_per_capita": 42529.98
+  },
+  "municipios": [
+    {
+      "cd_mun": "4201406",
+      "nome": "Araranguá",
+      "slug": "ARARANGUA",
+      "area_km2": 301.702,
+      "bounds": [
+        [
+          -29.059,
+          -49.6234
+        ],
+        [
+          -28.8336,
+          -49.2901
+        ]
+      ],
+      "center": [
+        -28.9463,
+        -49.4567
+      ],
+      "pop_2022": 71922,
+      "area_ibge_km2": 301.819,
+      "densidade_2022": 238.3,
+      "pop_urbana": 66387,
+      "pop_rural": 5535,
+      "pop_urbana_pct": 92.3,
+      "pop_rural_pct": 7.7,
+      "domicilios_2022": 26770,
+      "media_moradores": 2.67,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 2385270.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 147412.0,
+          "Valor adicionado bruto a preços correntes da indústria": 374558.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 315506.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 1319471.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 228323.0,
+          "Valor adicionado bruto a preços correntes total": 2156947.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 2693789.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 3023100.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 3023100.0,
+      "pib_per_capita": 42033.04,
+      "top_culturas": [
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 5527.0,
+          "producao_t": 59692.0,
+          "valor_mil_reais": 82488.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 1150.0,
+          "producao_t": 3105.0,
+          "valor_mil_reais": 66230.0
+        },
+        {
+          "produto": "Maracujá",
+          "area_ha": 220.0,
+          "producao_t": 5180.0,
+          "valor_mil_reais": 13738.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 700.0,
+          "producao_t": 6300.0,
+          "valor_mil_reais": 8398.0
+        },
+        {
+          "produto": "Mandioca",
+          "area_ha": 640.0,
+          "producao_t": 11520.0,
+          "valor_mil_reais": 6899.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 3402.48,
+        "formação não florestal": 1471.19,
+        "silvicultura": 1556.11,
+        "água": 1141.97,
+        "área antropizada": 21422.15,
+        "área edificada": 1328.42
+      },
+      "cnes_ativos": 351,
+      "rigeo": {
+        "municipio": "Araranguá",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/87b85cba-acb2-4f21-a9af-6eaf207ad2d0",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/80fc127a-00a4-4554-8ece-85d44f0f7725/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/675eb3a5-d531-4051-baa1-6f79dd12f484/content"
+      }
+    },
+    {
+      "cd_mun": "4201950",
+      "nome": "Balneário Arroio do Silva",
+      "slug": "BALNEARIO_ARROIO_DO_SILVA",
+      "area_km2": 94.51,
+      "bounds": [
+        [
+          -29.0957,
+          -49.5657
+        ],
+        [
+          -28.9418,
+          -49.3764
+        ]
+      ],
+      "center": [
+        -29.0188,
+        -49.471
+      ],
+      "pop_2022": 15820,
+      "area_ibge_km2": 94.477,
+      "densidade_2022": 167.45,
+      "pop_urbana": 15689,
+      "pop_rural": 131,
+      "pop_urbana_pct": 99.17,
+      "pop_rural_pct": 0.83,
+      "domicilios_2022": 6020,
+      "media_moradores": 2.62,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 221907.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 22435.0,
+          "Valor adicionado bruto a preços correntes da indústria": 9397.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 70841.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 107623.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 11611.0,
+          "Valor adicionado bruto a preços correntes total": 210296.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 251898.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 302101.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 302101.0,
+      "pib_per_capita": 19096.14,
+      "top_culturas": [],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 1390.4,
+        "formação não florestal": 4578.49,
+        "silvicultura": 411.14,
+        "água": 354.61,
+        "área antropizada": 2361.54,
+        "área edificada": 427.33
+      },
+      "cnes_ativos": 29,
+      "rigeo": {
+        "municipio": "Balneário Arroio do Silva",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/80bc7506-ceb0-43ec-8355-03625e439c75",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/b2edbe69-6c86-4ad1-9e02-68ae3f307e57/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/797a8cb6-4a1a-480a-ad3a-d45cb824752f/content"
+      }
+    },
+    {
+      "cd_mun": "4202073",
+      "nome": "Balneário Gaivota",
+      "slug": "BALNEARIO_GAIVOTA",
+      "area_km2": 146.775,
+      "bounds": [
+        [
+          -29.2424,
+          -49.7121
+        ],
+        [
+          -29.059,
+          -49.516
+        ]
+      ],
+      "center": [
+        -29.1507,
+        -49.614
+      ],
+      "pop_2022": 15669,
+      "area_ibge_km2": 146.834,
+      "densidade_2022": 106.71,
+      "pop_urbana": 14359,
+      "pop_rural": 1310,
+      "pop_urbana_pct": 91.64,
+      "pop_rural_pct": 8.36,
+      "domicilios_2022": 5970,
+      "media_moradores": 2.62,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 216995.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 28838.0,
+          "Valor adicionado bruto a preços correntes da indústria": 18807.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 68767.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 89547.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 11038.0,
+          "Valor adicionado bruto a preços correntes total": 205958.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 258904.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 308869.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 308869.0,
+      "pib_per_capita": 19712.11,
+      "top_culturas": [
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 130.0,
+          "producao_t": 325.0,
+          "valor_mil_reais": 6282.0
+        },
+        {
+          "produto": "Maracujá",
+          "area_ha": 56.0,
+          "producao_t": 1960.0,
+          "valor_mil_reais": 5286.0
+        },
+        {
+          "produto": "Mandioca",
+          "area_ha": 47.0,
+          "producao_t": 887.0,
+          "valor_mil_reais": 606.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 80.0,
+          "producao_t": 384.0,
+          "valor_mil_reais": 545.0
+        },
+        {
+          "produto": "Alface",
+          "area_ha": 3.0,
+          "producao_t": 66.0,
+          "valor_mil_reais": 502.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 1536.85,
+        "formação não florestal": 2912.2,
+        "silvicultura": 306.96,
+        "água": 1455.78,
+        "área antropizada": 8010.5,
+        "área edificada": 348.82
+      },
+      "cnes_ativos": 35,
+      "rigeo": {
+        "municipio": "Balneário Gaivota",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/db761e97-5cbe-4a34-9dc6-145629d3777a",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/d94a04ed-53e1-44f9-a9e8-992b1d3d582b/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/87f2f79a-8f83-426f-9473-3687673ecfb9/content"
+      }
+    },
+    {
+      "cd_mun": "4205191",
+      "nome": "Ermo",
+      "slug": "ERMO",
+      "area_km2": 65.347,
+      "bounds": [
+        [
+          -29.0205,
+          -49.7257
+        ],
+        [
+          -28.948,
+          -49.5803
+        ]
+      ],
+      "center": [
+        -28.9842,
+        -49.653
+      ],
+      "pop_2022": 2269,
+      "area_ibge_km2": 65.311,
+      "densidade_2022": 34.74,
+      "pop_urbana": 1247,
+      "pop_rural": 1022,
+      "pop_urbana_pct": 54.96,
+      "pop_rural_pct": 45.04,
+      "domicilios_2022": 809,
+      "media_moradores": 2.78,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 176552.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 39966.0,
+          "Valor adicionado bruto a preços correntes da indústria": 59781.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 16756.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 43246.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 16803.0,
+          "Valor adicionado bruto a preços correntes total": 159749.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 180978.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 241247.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 241247.0,
+      "pib_per_capita": 106323.05,
+      "top_culturas": [
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 3200.0,
+          "producao_t": 30240.0,
+          "valor_mil_reais": 42880.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 320.0,
+          "producao_t": 720.0,
+          "valor_mil_reais": 14400.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 450.0,
+          "producao_t": 4050.0,
+          "valor_mil_reais": 4860.0
+        },
+        {
+          "produto": "Soja (em grão)",
+          "area_ha": 250.0,
+          "producao_t": 570.0,
+          "valor_mil_reais": 1235.0
+        },
+        {
+          "produto": "Maracujá",
+          "area_ha": 10.0,
+          "producao_t": 300.0,
+          "valor_mil_reais": 750.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 505.24,
+        "silvicultura": 183.22,
+        "água": 100.11,
+        "área antropizada": 5515.62,
+        "área edificada": 37.29
+      },
+      "cnes_ativos": 8,
+      "rigeo": {
+        "municipio": "Ermo",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/8362a91c-d575-4471-85ac-e1f32d4f179b",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/685f674a-08c6-4c7a-8044-6f7a7a03dd48/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/dbb2e018-db2c-438c-9ae4-3b2bd0cd7484/content"
+      }
+    },
+    {
+      "cd_mun": "4208708",
+      "nome": "Jacinto Machado",
+      "slug": "JACINTO_MACHADO",
+      "area_km2": 430.591,
+      "bounds": [
+        [
+          -29.1218,
+          -50.0044
+        ],
+        [
+          -28.8796,
+          -49.6989
+        ]
+      ],
+      "center": [
+        -29.0007,
+        -49.8516
+      ],
+      "pop_2022": 10624,
+      "area_ibge_km2": 430.704,
+      "densidade_2022": 24.67,
+      "pop_urbana": 6263,
+      "pop_rural": 4361,
+      "pop_urbana_pct": 58.95,
+      "pop_rural_pct": 41.05,
+      "domicilios_2022": 3951,
+      "media_moradores": 2.69,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 529785.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 132480.0,
+          "Valor adicionado bruto a preços correntes da indústria": 130616.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 53663.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 166197.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 46829.0,
+          "Valor adicionado bruto a preços correntes total": 482956.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 598807.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 733562.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 733562.0,
+      "pib_per_capita": 69047.63,
+      "top_culturas": [
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 8056.0,
+          "producao_t": 70780.0,
+          "valor_mil_reais": 116079.0
+        },
+        {
+          "produto": "Banana (cacho)",
+          "area_ha": 3750.0,
+          "producao_t": 56250.0,
+          "valor_mil_reais": 105750.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 500.0,
+          "producao_t": 1125.0,
+          "valor_mil_reais": 22500.0
+        },
+        {
+          "produto": "Maracujá",
+          "area_ha": 105.0,
+          "producao_t": 3360.0,
+          "valor_mil_reais": 8168.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 700.0,
+          "producao_t": 6300.0,
+          "valor_mil_reais": 7346.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 19344.2,
+        "formação não florestal": 308.57,
+        "silvicultura": 1783.2,
+        "água": 358.71,
+        "área antropizada": 21125.48,
+        "área edificada": 196.7
+      },
+      "cnes_ativos": 26,
+      "rigeo": {
+        "municipio": "Jacinto Machado",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/c43f811a-d579-4e78-aa19-cb4e54394f08",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/2c1448f9-141c-4083-aa95-bf92559d593c/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/5434e439-7854-4412-9106-bf7117e5572d/content"
+      }
+    },
+    {
+      "cd_mun": "4210407",
+      "nome": "Maracajá",
+      "slug": "MARACAJA",
+      "area_km2": 62.875,
+      "bounds": [
+        [
+          -28.9103,
+          -49.5233
+        ],
+        [
+          -28.8145,
+          -49.3979
+        ]
+      ],
+      "center": [
+        -28.8624,
+        -49.4606
+      ],
+      "pop_2022": 7815,
+      "area_ibge_km2": 62.902,
+      "densidade_2022": 124.24,
+      "pop_urbana": 6399,
+      "pop_rural": 1416,
+      "pop_urbana_pct": 81.88,
+      "pop_rural_pct": 18.12,
+      "domicilios_2022": 2744,
+      "media_moradores": 2.82,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 273081.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 27992.0,
+          "Valor adicionado bruto a preços correntes da indústria": 49645.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 40907.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 126148.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 28389.0,
+          "Valor adicionado bruto a preços correntes total": 244692.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 319264.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 355365.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 355365.0,
+      "pib_per_capita": 45472.17,
+      "top_culturas": [
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 1850.0,
+          "producao_t": 19536.0,
+          "valor_mil_reais": 29070.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 200.0,
+          "producao_t": 450.0,
+          "valor_mil_reais": 9000.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 280.0,
+          "producao_t": 2772.0,
+          "valor_mil_reais": 3604.0
+        },
+        {
+          "produto": "Mandioca",
+          "area_ha": 50.0,
+          "producao_t": 900.0,
+          "valor_mil_reais": 847.0
+        },
+        {
+          "produto": "Banana (cacho)",
+          "area_ha": 6.0,
+          "producao_t": 36.0,
+          "valor_mil_reais": 63.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 1004.97,
+        "silvicultura": 218.98,
+        "água": 70.55,
+        "área antropizada": 4808.02,
+        "área edificada": 142.28
+      },
+      "cnes_ativos": 13,
+      "rigeo": {
+        "municipio": "Maracajá",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/e9ae5078-f495-4495-bfbe-2cf381bd8742",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/f8610b76-f6e0-4181-ad07-4205cf742879/content",
+        "sig_url": null
+      }
+    },
+    {
+      "cd_mun": "4210803",
+      "nome": "Meleiro",
+      "slug": "MELEIRO",
+      "area_km2": 186.403,
+      "bounds": [
+        [
+          -28.9176,
+          -49.6782
+        ],
+        [
+          -28.7474,
+          -49.5095
+        ]
+      ],
+      "center": [
+        -28.8325,
+        -49.5939
+      ],
+      "pop_2022": 7006,
+      "area_ibge_km2": 186.439,
+      "densidade_2022": 37.58,
+      "pop_urbana": 4323,
+      "pop_rural": 2683,
+      "pop_urbana_pct": 61.7,
+      "pop_rural_pct": 38.3,
+      "domicilios_2022": 2589,
+      "media_moradores": 2.68,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 340386.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 115204.0,
+          "Valor adicionado bruto a preços correntes da indústria": 41942.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 41733.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 120232.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 21275.0,
+          "Valor adicionado bruto a preços correntes total": 319111.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 377837.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 469316.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 469316.0,
+      "pib_per_capita": 66987.72,
+      "top_culturas": [
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 10975.0,
+          "producao_t": 96580.0,
+          "valor_mil_reais": 153562.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 1400.0,
+          "producao_t": 13860.0,
+          "valor_mil_reais": 16632.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 260.0,
+          "producao_t": 585.0,
+          "valor_mil_reais": 11700.0
+        },
+        {
+          "produto": "Soja (em grão)",
+          "area_ha": 560.0,
+          "producao_t": 840.0,
+          "valor_mil_reais": 1680.0
+        },
+        {
+          "produto": "Mandioca",
+          "area_ha": 15.0,
+          "producao_t": 240.0,
+          "valor_mil_reais": 192.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 2242.07,
+        "silvicultura": 240.55,
+        "água": 208.38,
+        "área antropizada": 15870.85,
+        "área edificada": 137.44
+      },
+      "cnes_ativos": 36,
+      "rigeo": {
+        "municipio": "Meleiro",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/a2399b88-1667-4451-901a-6d7948f0ffc4",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/4b910435-512c-4af5-95b6-5a41c31cdbc6/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/feb7c60a-6a8c-47af-9080-7109ebf1cb09/content"
+      }
+    },
+    {
+      "cd_mun": "4211256",
+      "nome": "Morro Grande",
+      "slug": "MORRO_GRANDE",
+      "area_km2": 260.002,
+      "bounds": [
+        [
+          -28.8682,
+          -49.8425
+        ],
+        [
+          -28.6098,
+          -49.6484
+        ]
+      ],
+      "center": [
+        -28.739,
+        -49.7455
+      ],
+      "pop_2022": 3010,
+      "area_ibge_km2": 260.143,
+      "densidade_2022": 11.57,
+      "pop_urbana": 1367,
+      "pop_rural": 1643,
+      "pop_urbana_pct": 45.42,
+      "pop_rural_pct": 54.58,
+      "domicilios_2022": 1088,
+      "media_moradores": 2.77,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 145130.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 44194.0,
+          "Valor adicionado bruto a preços correntes da indústria": 35893.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 21274.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 33322.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 10447.0,
+          "Valor adicionado bruto a preços correntes total": 134682.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 174039.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 194418.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 194418.0,
+      "pib_per_capita": 64590.7,
+      "top_culturas": [
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 3100.0,
+          "producao_t": 29140.0,
+          "valor_mil_reais": 46362.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 300.0,
+          "producao_t": 690.0,
+          "valor_mil_reais": 13800.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 450.0,
+          "producao_t": 3105.0,
+          "valor_mil_reais": 3620.0
+        },
+        {
+          "produto": "Soja (em grão)",
+          "area_ha": 80.0,
+          "producao_t": 168.0,
+          "valor_mil_reais": 319.0
+        },
+        {
+          "produto": "Banana (cacho)",
+          "area_ha": 20.0,
+          "producao_t": 160.0,
+          "valor_mil_reais": 288.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 17697.75,
+        "formação não florestal": 146.25,
+        "silvicultura": 1368.84,
+        "água": 158.19,
+        "área antropizada": 6391.32,
+        "área edificada": 45.06
+      },
+      "cnes_ativos": 12,
+      "rigeo": {
+        "municipio": "Morro Grande",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/4cd6f1fb-56e0-4571-a779-82dfc816801a",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/04f90141-c4c9-43fb-8068-523425882a36/content",
+        "sig_url": null
+      }
+    },
+    {
+      "cd_mun": "4212254",
+      "nome": "Passo de Torres",
+      "slug": "PASSO_DE_TORRES",
+      "area_km2": 92.596,
+      "bounds": [
+        [
+          -29.3291,
+          -49.7918
+        ],
+        [
+          -29.2058,
+          -49.6451
+        ]
+      ],
+      "center": [
+        -29.2675,
+        -49.7185
+      ],
+      "pop_2022": 12897,
+      "area_ibge_km2": 92.638,
+      "densidade_2022": 139.22,
+      "pop_urbana": 12261,
+      "pop_rural": 636,
+      "pop_urbana_pct": 95.07,
+      "pop_rural_pct": 4.93,
+      "domicilios_2022": 4746,
+      "media_moradores": 2.71,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 237368.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 28781.0,
+          "Valor adicionado bruto a preços correntes da indústria": 19958.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 53194.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 119723.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 15712.0,
+          "Valor adicionado bruto a preços correntes total": 221657.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 274891.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 301934.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 301934.0,
+      "pib_per_capita": 23411.18,
+      "top_culturas": [
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 400.0,
+          "producao_t": 3456.0,
+          "valor_mil_reais": 5530.0
+        },
+        {
+          "produto": "Maracujá",
+          "area_ha": 35.0,
+          "producao_t": 980.0,
+          "valor_mil_reais": 2489.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 30.0,
+          "producao_t": 72.0,
+          "valor_mil_reais": 1440.0
+        },
+        {
+          "produto": "Mandioca",
+          "area_ha": 23.0,
+          "producao_t": 445.0,
+          "valor_mil_reais": 317.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 10.0,
+          "producao_t": 66.0,
+          "valor_mil_reais": 79.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 774.14,
+        "formação não florestal": 801.55,
+        "silvicultura": 292.28,
+        "água": 921.14,
+        "área antropizada": 6275.41,
+        "área edificada": 442.85
+      },
+      "cnes_ativos": 16,
+      "rigeo": {}
+    },
+    {
+      "cd_mun": "4213807",
+      "nome": "Praia Grande",
+      "slug": "PRAIA_GRANDE",
+      "area_km2": 284.096,
+      "bounds": [
+        [
+          -29.3551,
+          -50.1775
+        ],
+        [
+          -29.0682,
+          -49.8184
+        ]
+      ],
+      "center": [
+        -29.2116,
+        -49.998
+      ],
+      "pop_2022": 8270,
+      "area_ibge_km2": 284.36,
+      "densidade_2022": 29.08,
+      "pop_urbana": 6028,
+      "pop_rural": 2242,
+      "pop_urbana_pct": 72.89,
+      "pop_rural_pct": 27.11,
+      "domicilios_2022": 3235,
+      "media_moradores": 2.55,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 223279.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 44600.0,
+          "Valor adicionado bruto a preços correntes da indústria": 25348.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 37441.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 100509.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 15381.0,
+          "Valor adicionado bruto a preços correntes total": 207898.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 239795.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 312294.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 312294.0,
+      "pib_per_capita": 37762.27,
+      "top_culturas": [
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 4536.0,
+          "producao_t": 46267.0,
+          "valor_mil_reais": 66624.0
+        },
+        {
+          "produto": "Banana (cacho)",
+          "area_ha": 360.0,
+          "producao_t": 2880.0,
+          "valor_mil_reais": 7272.0
+        },
+        {
+          "produto": "Maracujá",
+          "area_ha": 33.0,
+          "producao_t": 822.0,
+          "valor_mil_reais": 2616.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 60.0,
+          "producao_t": 135.0,
+          "valor_mil_reais": 2610.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 160.0,
+          "producao_t": 864.0,
+          "valor_mil_reais": 1223.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 17502.17,
+        "formação não florestal": 87.66,
+        "silvicultura": 488.25,
+        "água": 187.17,
+        "área antropizada": 9934.98,
+        "área edificada": 200.15
+      },
+      "cnes_ativos": 31,
+      "rigeo": {
+        "municipio": "Praia Grande",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/f89846ad-4bd8-442f-ac8b-2d2fb8ad9ac4",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/64b4007c-6149-4f96-ba0f-49d3a0c451ed/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/482a71c9-f3a9-4c0b-95e6-9626e9699c57/content"
+      }
+    },
+    {
+      "cd_mun": "4215653",
+      "nome": "Santa Rosa do Sul",
+      "slug": "SANTA_ROSA_DO_SUL",
+      "area_km2": 150.229,
+      "bounds": [
+        [
+          -29.2058,
+          -49.8341
+        ],
+        [
+          -29.0393,
+          -49.6563
+        ]
+      ],
+      "center": [
+        -29.1226,
+        -49.7452
+      ],
+      "pop_2022": 9792,
+      "area_ibge_km2": 150.299,
+      "densidade_2022": 65.15,
+      "pop_urbana": 5258,
+      "pop_rural": 4534,
+      "pop_urbana_pct": 53.7,
+      "pop_rural_pct": 46.3,
+      "domicilios_2022": 3674,
+      "media_moradores": 2.66,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 199094.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 53004.0,
+          "Valor adicionado bruto a preços correntes da indústria": 10615.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 47029.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 74695.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 13752.0,
+          "Valor adicionado bruto a preços correntes total": 185342.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 229214.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 277594.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 277594.0,
+      "pib_per_capita": 28349.06,
+      "top_culturas": [
+        {
+          "produto": "Banana (cacho)",
+          "area_ha": 1100.0,
+          "producao_t": 16500.0,
+          "valor_mil_reais": 46390.0
+        },
+        {
+          "produto": "Maracujá",
+          "area_ha": 205.0,
+          "producao_t": 8550.0,
+          "valor_mil_reais": 25306.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 570.0,
+          "producao_t": 1140.0,
+          "valor_mil_reais": 22036.0
+        },
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 800.0,
+          "producao_t": 6800.0,
+          "valor_mil_reais": 10557.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 110.0,
+          "producao_t": 792.0,
+          "valor_mil_reais": 1075.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 3213.56,
+        "silvicultura": 577.7,
+        "água": 1430.44,
+        "área antropizada": 9736.23,
+        "área edificada": 138.56
+      },
+      "cnes_ativos": 32,
+      "rigeo": {
+        "municipio": "Santa Rosa do Sul",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/d92dab50-88e4-48f2-b9a8-07e438e9168e",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/c18a805d-5699-472b-bce6-c5305ec56114/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/c5171c94-d9dd-4e45-82cd-020a08027436/content"
+      }
+    },
+    {
+      "cd_mun": "4216404",
+      "nome": "São João do Sul",
+      "slug": "SAO_JOAO_DO_SUL",
+      "area_km2": 184.224,
+      "bounds": [
+        [
+          -29.2895,
+          -49.9576
+        ],
+        [
+          -29.0952,
+          -49.7121
+        ]
+      ],
+      "center": [
+        -29.1923,
+        -49.8349
+      ],
+      "pop_2022": 8668,
+      "area_ibge_km2": 184.375,
+      "densidade_2022": 47.01,
+      "pop_urbana": 3351,
+      "pop_rural": 5317,
+      "pop_urbana_pct": 38.66,
+      "pop_rural_pct": 61.34,
+      "domicilios_2022": 3323,
+      "media_moradores": 2.6,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 282920.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 106917.0,
+          "Valor adicionado bruto a preços correntes da indústria": 22832.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 41540.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 95292.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 16339.0,
+          "Valor adicionado bruto a preços correntes total": 266582.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 321117.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 434705.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 434705.0,
+      "pib_per_capita": 50150.55,
+      "top_culturas": [
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 4159.0,
+          "producao_t": 37431.0,
+          "valor_mil_reais": 57419.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 1080.0,
+          "producao_t": 2673.0,
+          "valor_mil_reais": 53460.0
+        },
+        {
+          "produto": "Maracujá",
+          "area_ha": 600.0,
+          "producao_t": 21000.0,
+          "valor_mil_reais": 50009.0
+        },
+        {
+          "produto": "Morango",
+          "area_ha": 7.0,
+          "producao_t": 350.0,
+          "valor_mil_reais": 4116.0
+        },
+        {
+          "produto": "Banana (cacho)",
+          "area_ha": 80.0,
+          "producao_t": 1280.0,
+          "valor_mil_reais": 2842.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 2930.41,
+        "silvicultura": 395.61,
+        "água": 969.22,
+        "área antropizada": 13992.67,
+        "área edificada": 39.23
+      },
+      "cnes_ativos": 23,
+      "rigeo": {
+        "municipio": "São João do Sul",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/0c1d826e-997c-419a-83b9-8775a0a2639a",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/a8fc6fc1-83f1-4fd7-aae2-d54955574faf/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/d1cb60ef-8dbf-404c-b529-a2cfbdd65f36/content"
+      }
+    },
+    {
+      "cd_mun": "4217709",
+      "nome": "Sombrio",
+      "slug": "SOMBRIO",
+      "area_km2": 143.404,
+      "bounds": [
+        [
+          -29.143,
+          -49.7466
+        ],
+        [
+          -29.018,
+          -49.5657
+        ]
+      ],
+      "center": [
+        -29.0805,
+        -49.6561
+      ],
+      "pop_2022": 29991,
+      "area_ibge_km2": 143.457,
+      "densidade_2022": 209.06,
+      "pop_urbana": 25894,
+      "pop_rural": 4097,
+      "pop_urbana_pct": 86.34,
+      "pop_rural_pct": 13.66,
+      "domicilios_2022": 11048,
+      "media_moradores": 2.71,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 910386.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 180626.0,
+          "Valor adicionado bruto a preços correntes da indústria": 133752.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 146622.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 382999.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 66387.0,
+          "Valor adicionado bruto a preços correntes total": 843999.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 1077546.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 1304359.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 1304359.0,
+      "pib_per_capita": 43491.68,
+      "top_culturas": [
+        {
+          "produto": "Maracujá",
+          "area_ha": 550.0,
+          "producao_t": 23250.0,
+          "valor_mil_reais": 63932.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 850.0,
+          "producao_t": 2295.0,
+          "valor_mil_reais": 48952.0
+        },
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 1340.0,
+          "producao_t": 13199.0,
+          "valor_mil_reais": 21778.0
+        },
+        {
+          "produto": "Banana (cacho)",
+          "area_ha": 525.0,
+          "producao_t": 6300.0,
+          "valor_mil_reais": 16834.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 810.0,
+          "producao_t": 8262.0,
+          "valor_mil_reais": 9914.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 2180.5,
+        "formação não florestal": 0.28,
+        "silvicultura": 459.08,
+        "água": 425.99,
+        "área antropizada": 10600.58,
+        "área edificada": 661.14
+      },
+      "cnes_ativos": 90,
+      "rigeo": {
+        "municipio": "Sombrio",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/e4456995-7ae8-46d6-9d56-7e8e12782aa5",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/5d227298-616e-4cc8-b3ca-8705d32ad8d1/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/c7416d02-8d2e-4147-8d7b-28ac103a5148/content"
+      }
+    },
+    {
+      "cd_mun": "4218103",
+      "nome": "Timbé do Sul",
+      "slug": "TIMBE_DO_SUL",
+      "area_km2": 328.45,
+      "bounds": [
+        [
+          -28.9489,
+          -49.9699
+        ],
+        [
+          -28.7003,
+          -49.7327
+        ]
+      ],
+      "center": [
+        -28.8246,
+        -49.8513
+      ],
+      "pop_2022": 5386,
+      "area_ibge_km2": 328.507,
+      "densidade_2022": 16.4,
+      "pop_urbana": 2678,
+      "pop_rural": 2708,
+      "pop_urbana_pct": 49.72,
+      "pop_rural_pct": 50.28,
+      "domicilios_2022": 1998,
+      "media_moradores": 2.69,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 154885.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 59263.0,
+          "Valor adicionado bruto a preços correntes da indústria": 7969.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 32400.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 47077.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 8175.0,
+          "Valor adicionado bruto a preços correntes total": 146709.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 156049.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 197892.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 197892.0,
+      "pib_per_capita": 36741.92,
+      "top_culturas": [
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 800.0,
+          "producao_t": 1800.0,
+          "valor_mil_reais": 36000.0
+        },
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 2339.0,
+          "producao_t": 20700.0,
+          "valor_mil_reais": 27991.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 530.0,
+          "producao_t": 4452.0,
+          "valor_mil_reais": 5245.0
+        },
+        {
+          "produto": "Banana (cacho)",
+          "area_ha": 110.0,
+          "producao_t": 935.0,
+          "valor_mil_reais": 2668.0
+        },
+        {
+          "produto": "Abóbora",
+          "area_ha": 60.0,
+          "producao_t": 480.0,
+          "valor_mil_reais": 240.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 22619.94,
+        "formação não florestal": 345.79,
+        "silvicultura": 1889.3,
+        "água": 140.5,
+        "área antropizada": 7925.62,
+        "área edificada": 71.25
+      },
+      "cnes_ativos": 13,
+      "rigeo": {
+        "municipio": "Timbé do Sul",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/c1412e29-7dee-4f8e-bd92-cec04fe89181",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/13920f60-d29c-4e46-b3ec-2ef2fb7d5767/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/a2038154-7596-49f5-8d83-2a9ec39a7637/content"
+      }
+    },
+    {
+      "cd_mun": "4218806",
+      "nome": "Turvo",
+      "slug": "TURVO",
+      "area_km2": 234.919,
+      "bounds": [
+        [
+          -28.9841,
+          -49.8678
+        ],
+        [
+          -28.8041,
+          -49.5339
+        ]
+      ],
+      "center": [
+        -28.8941,
+        -49.7009
+      ],
+      "pop_2022": 13043,
+      "area_ibge_km2": 235.104,
+      "densidade_2022": 55.48,
+      "pop_urbana": 9333,
+      "pop_rural": 3710,
+      "pop_urbana_pct": 71.56,
+      "pop_rural_pct": 28.44,
+      "domicilios_2022": 4820,
+      "media_moradores": 2.7,
+      "pib_serie": {
+        "2021": {
+          "Produto Interno Bruto a preços correntes": 737916.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 146869.0,
+          "Valor adicionado bruto a preços correntes da indústria": 166715.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 68873.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 287802.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 67657.0,
+          "Valor adicionado bruto a preços correntes total": 670259.0
+        },
+        "2022": {
+          "Produto Interno Bruto a preços correntes": 820536.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        },
+        "2023": {
+          "Produto Interno Bruto a preços correntes": 992639.0,
+          "Valor adicionado bruto a preços correntes da agropecuária": 0.0,
+          "Valor adicionado bruto a preços correntes da indústria": 0.0,
+          "Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social": 0.0,
+          "Impostos, líquidos de subsídios, sobre produtos a preços correntes": 0.0,
+          "Valor adicionado bruto a preços correntes total": 0.0
+        }
+      },
+      "pib_ano": "2023",
+      "pib_total_mil": 992639.0,
+      "pib_per_capita": 76105.11,
+      "top_culturas": [
+        {
+          "produto": "Arroz (em casca)",
+          "area_ha": 11850.0,
+          "producao_t": 114353.0,
+          "valor_mil_reais": 178391.0
+        },
+        {
+          "produto": "Fumo (em folha)",
+          "area_ha": 550.0,
+          "producao_t": 1238.0,
+          "valor_mil_reais": 24760.0
+        },
+        {
+          "produto": "Milho (em grão)",
+          "area_ha": 730.0,
+          "producao_t": 7884.0,
+          "valor_mil_reais": 9461.0
+        },
+        {
+          "produto": "Banana (cacho)",
+          "area_ha": 130.0,
+          "producao_t": 1560.0,
+          "valor_mil_reais": 3120.0
+        },
+        {
+          "produto": "Soja (em grão)",
+          "area_ha": 600.0,
+          "producao_t": 1440.0,
+          "valor_mil_reais": 2880.0
+        }
+      ],
+      "uso_solo_fbds_ha": {
+        "formação florestal": 4671.74,
+        "formação não florestal": 0.08,
+        "silvicultura": 706.59,
+        "água": 235.73,
+        "área antropizada": 17636.58,
+        "área edificada": 291.51
+      },
+      "cnes_ativos": 59,
+      "rigeo": {
+        "municipio": "Turvo",
+        "rigeo_url": "https://rigeo.sgb.gov.br/items/16c2343a-44f7-49f2-a0ba-973337c3fa4d",
+        "pdf_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/65dbc511-7498-4b9c-bc11-e3acedc3debf/content",
+        "sig_url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/171f0d18-5777-4df2-b8ec-c937cc5647bc/content"
+      }
+    }
+  ]
+}

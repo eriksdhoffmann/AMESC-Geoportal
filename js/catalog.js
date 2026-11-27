@@ -1,0 +1,890 @@
+/**
+ * Geoportal Regional da AMESC — 15 Municípios do Extremo Sul Catarinense (SC)
+ * Catálogo Unificado de Camadas, Mapas Base (SIGSC / Satélite HD / OSM), Combos Temáticos e Downloads.
+ * Referência Geodésica: SIRGAS 2000 (EPSG:4674 / UTM 22S EPSG:31982) | Web: WGS 84 (EPSG:4326).
+ */
+window.GeoCatalog = (() => {
+  const SIGSC_WMS = 'https://sigsc.sc.gov.br/sigserver/ows';
+  const TRANSPARENT_TILE =
+    'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+  // Extensão regional dos 15 municípios da AMESC
+  const AMESC_CENTER = [-28.98, -49.70];
+  const AMESC_BOUNDS = [
+    [-29.3551, -50.1775],
+    [-28.6098, -49.2901],
+  ];
+
+  // Paletas oficiais verificadas sobre os atributos reais das bases regionais da AMESC
+  const FBDS_USO_COLORS = {
+    'formação florestal': '#15803d',
+    'formação não florestal': '#84cc16',
+    silvicultura: '#0f766e',
+    'área antropizada': '#eab308',
+    'área edificada': '#dc2626',
+    'água': '#0284c7',
+  };
+
+  const FBDS_APP_COLORS = {
+    "curso d'água (0 - 10m)": '#10b981',
+    "curso d'água (10 - 50m)": '#059669',
+    "curso d'água (50 - 200m)": '#047857',
+    "curso d'água (200 - 600m)": '#065f46',
+    "massa d'água": '#0284c7',
+    nascente: '#22c55e',
+  };
+
+  const SUSCET_COLORS = {
+    Alta: '#dc2626',
+    'Média': '#f59e0b',
+    Baixa: '#22c55e',
+  };
+
+  const RISCO_GRAU_COLORS = {
+    'Muito alto': '#991b1b',
+    'Muito Alto': '#991b1b',
+    Alto: '#dc2626',
+    'Médio': '#f59e0b',
+    Baixo: '#22c55e',
+  };
+
+  const DECLIV_COLORS = {
+    '0–5% (Plano)': '#bef264',
+    '5–12% (Suave)': '#4ade80',
+    '12–25% (Ondulado)': '#facc15',
+    '25–45% (Forte)': '#f97316',
+    '>45% (Escarpado)': '#dc2626',
+  };
+
+  const FITO_COLORS = {
+    'Floresta Nebular de Crista / Serra Geral': '#065f46',
+    'Floresta Tropical Meridional / Encostas': '#15803d',
+    'Floresta Tropical da Planície Quaternária Sul': '#22c55e',
+    'Vegetação de Influência Fluvio-Marinha': '#0d9488',
+  };
+
+  const GEOMORF_COLORS = {
+    'Planalto das Araucárias': '#7f1d1d',
+    'Depressão da Zona Carbonífera Catarinense': '#f59e0b',
+    'Formas Agradacionais Atuais e Subatuais Interioranas': '#eab308',
+    'Planícies Costeiras': '#38bdf8',
+    'Planícies Deltáicas, Estuarinas e Praiais': '#06b6d4',
+    "Corpo d'água continental": '#0284c7',
+  };
+
+  const PEDOLOGIA_COLORS = {
+    CAMBISSOLO: '#d97706',
+    GLEISSOLO: '#38bdf8',
+    ARGISSOLO: '#f97316',
+    NEOSSOLO: '#78716c',
+    ESPODOSSOLO: '#a855f7',
+    ORGANOSSOLO: '#475569',
+    NITOSSOLO: '#dc2626',
+  };
+
+  const BACIAS_COLORS = {
+    ARARANGUA: '#0284c7',
+    MAMPITUBA: '#0d9488',
+    URUSSANGA: '#6366f1',
+  };
+
+  const SETOR_SIT_COLORS = {
+    Urbana: '#f59e0b',
+    Rural: '#22c55e',
+  };
+
+  const RODOVIA_COLORS = {
+    'Federal (DNIT)': '#991b1b',
+    'Estadual (SIE-SC)': '#dc2626',
+    'Rodovia / Acesso Regional': '#ea580c',
+  };
+
+  const VIARIO_COLORS = {
+    'Via Local / Urbana': '#38bdf8',
+    'Estrada Municipal / Vicinal': '#f59e0b',
+    'Estrada Rural / Agrícola': '#a3e635',
+  };
+
+  const SAUDE_COLORS = {
+    'Pública Municipal': '#dc2626',
+    'Pública Estadual/Federal': '#991b1b',
+    'Sem Fins Lucrativos': '#7c3aed',
+    'Privada / Empresarial': '#0284c7',
+  };
+
+  const LICENCA_COLORS = {
+    LICENCIAMENTO: '#2563eb',
+    EXPLORACAO_FLORESTAL: '#16a34a',
+    CERTIDAO_DECLARACAO: '#8b5cf6',
+  };
+
+  // ==================== MAPAS BASE (8) ====================
+  const BASEMAPS = [
+    {
+      id: 'satelite_global',
+      name: 'Satélite HD Atual (Esri World Imagery)',
+      shortName: 'Satélite HD',
+      group: 'Imagens Aéreas e Satélite',
+      type: 'xyz',
+      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      attribution: 'Esri, Maxar, Earthstar Geographics',
+      maxNativeZoom: 19,
+      maxZoom: 21,
+      defaultOpacity: 1,
+      badge: 'Satélite HD',
+    },
+    {
+      id: 'satelite_hibrido',
+      name: 'Satélite HD + Rótulos e Rodovias',
+      shortName: 'Sat. Híbrido',
+      group: 'Imagens Aéreas e Satélite',
+      type: 'xyz',
+      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      overlayUrls: [
+        'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
+        'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+      ],
+      attribution: 'Esri World Imagery & Reference',
+      maxNativeZoom: 19,
+      maxZoom: 21,
+      defaultOpacity: 1,
+      badge: 'Híbrido',
+    },
+    {
+      id: 'orto_sigsc_2012',
+      name: 'Ortofoto Oficial SC 2012 — 39 cm (SIGSC WMS)',
+      shortName: 'Orto SC 2012',
+      group: 'Levantamento Aerofotogramétrico Oficial (SIGSC)',
+      type: 'wms',
+      url: SIGSC_WMS,
+      wmsLayers: 'SIGSC:OrtoRGB-Landsat-2012',
+      wmsFormat: 'image/jpeg',
+      wmsTransparent: false,
+      minZoom: 9,
+      maxNativeZoom: 20,
+      maxZoom: 21,
+      bounds: AMESC_BOUNDS,
+      isMunicipalClip: true,
+      hasSatelliteUnderlay: true,
+      attribution: 'Levantamento Aerofotogramétrico SC 2010–2012 — SIGSC / Governo de SC',
+      defaultOpacity: 1,
+      badge: 'SIGSC 39cm',
+    },
+    {
+      id: 'mdt_sigsc_2012',
+      name: 'MDT — Relevo Sombreado Oficial SC (SIGSC WMS)',
+      shortName: 'MDT SC 2012',
+      group: 'Levantamento Aerofotogramétrico Oficial (SIGSC)',
+      type: 'wms',
+      url: SIGSC_WMS,
+      wmsLayers: 'SIGSC:MDT-2012',
+      wmsFormat: 'image/png',
+      wmsTransparent: true,
+      minZoom: 9,
+      maxNativeZoom: 18,
+      maxZoom: 20,
+      bounds: AMESC_BOUNDS,
+      isMunicipalClip: true,
+      attribution: 'Governo de SC — SDS / SIGSC (MDT 2012)',
+      defaultOpacity: 0.92,
+      badge: 'MDT SC',
+    },
+    {
+      id: 'mds_sigsc_2012',
+      name: 'MDS — Hipsometria / Superfície SC (SIGSC WMS)',
+      shortName: 'MDS SC 2012',
+      group: 'Levantamento Aerofotogramétrico Oficial (SIGSC)',
+      type: 'wms',
+      url: SIGSC_WMS,
+      wmsLayers: 'SIGSC:MDS-2012',
+      wmsFormat: 'image/png',
+      wmsTransparent: true,
+      minZoom: 9,
+      maxNativeZoom: 18,
+      maxZoom: 20,
+      bounds: AMESC_BOUNDS,
+      isMunicipalClip: true,
+      attribution: 'Governo de SC — SDS / SIGSC (MDS 2012)',
+      defaultOpacity: 0.92,
+      badge: 'MDS SC',
+    },
+    {
+      id: 'osm',
+      name: 'OpenStreetMap Padrão',
+      shortName: 'OSM',
+      group: 'Mapas Cartográficos',
+      type: 'xyz',
+      url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution: '© OpenStreetMap contributors',
+      maxNativeZoom: 19,
+      maxZoom: 21,
+      defaultOpacity: 1,
+      badge: 'OSM',
+    },
+    {
+      id: 'carto_light',
+      name: 'Mapa Claro Minimalista (Carto Positron)',
+      shortName: 'Claro',
+      group: 'Mapas Cartográficos',
+      type: 'xyz',
+      url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      attribution: '© OpenStreetMap, © CARTO',
+      maxNativeZoom: 19,
+      maxZoom: 21,
+      defaultOpacity: 1,
+      badge: 'Claro',
+    },
+    {
+      id: 'opentopomap',
+      name: 'Mapa Topográfico / Curvas (OpenTopoMap)',
+      shortName: 'Topo',
+      group: 'Mapas Cartográficos',
+      type: 'xyz',
+      url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+      attribution: '© OpenTopoMap (SRTM / OSM)',
+      maxNativeZoom: 16,
+      maxZoom: 19,
+      defaultOpacity: 1,
+      badge: 'Topo',
+    },
+  ];
+
+  // ==================== GRUPOS TEMÁTICOS (MOSAICO 15 MUNICÍPIOS AMESC) ====================
+  const LAYER_GROUPS = [
+    {
+      id: 'territorio_cadastro',
+      name: '1. Divisão Político-Administrativa & Cadastro (IBGE / INCRA)',
+      expanded: true,
+      layers: [
+        {
+          id: 'amesc_municipios',
+          name: 'Divisas Intermunicipais — 15 Municípios AMESC (IBGE)',
+          localFile: 'data/amesc_municipios.geojson',
+          geomType: 'polygon',
+          outlineMode: true,
+          defaultOpacity: 1,
+          style: { color: '#f59e0b', weight: 2.6, dashArray: '6 3', fillOpacity: 0.04 },
+          labelField: 'NM_MUN',
+          description: 'Mosaico oficial das divisas dos 15 municípios do Extremo Sul Catarinense (SIRGAS 2000).',
+        },
+        {
+          id: 'amesc_distritos_ibge',
+          name: 'Distritos Municipais — Censo 2022 (IBGE — 26)',
+          localFile: 'data/amesc_distritos_ibge.geojson',
+          geomType: 'polygon',
+          outlineMode: true,
+          defaultOpacity: 0.9,
+          style: { color: '#38bdf8', weight: 2, dashArray: '4 4', fillOpacity: 0.03 },
+          description: '26 distritos oficiais dos 15 municípios da AMESC (IBGE CD2022).',
+        },
+        {
+          id: 'amesc_bairros_ibge',
+          name: 'Bairros Oficiais — Censo 2022 (IBGE — 69)',
+          localFile: 'data/amesc_bairros_ibge.geojson',
+          geomType: 'polygon',
+          outlineMode: true,
+          defaultOpacity: 0.9,
+          style: { color: '#a855f7', weight: 1.6, fillOpacity: 0.08 },
+          description: '69 bairros delimitados no Censo Demográfico 2022 na região AMESC (IBGE).',
+        },
+        {
+          id: 'amesc_setores_ibge',
+          name: 'Setores Censitários — Censo 2022 (IBGE — 614)',
+          localFile: 'data/amesc_setores_ibge.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.5,
+          colorField: 'situacao',
+          colorMap: SETOR_SIT_COLORS,
+          style: { color: '#334155', weight: 1, fillOpacity: 0.35 },
+          description: '614 setores censitários oficiais do Censo 2022 (Situação Urbana × Rural).',
+        },
+        {
+          id: 'amesc_incra_sigef',
+          name: 'Imóveis Rurais Certificados — INCRA/SIGEF (1.143)',
+          localFile: 'data/amesc_incra_sigef.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.58,
+          style: { color: '#0d9488', weight: 1.1, fillColor: '#14b8a6', fillOpacity: 0.25 },
+          description: '1.143 parcelas rurais georreferenciadas e certificadas pelo INCRA/SIGEF na AMESC.',
+        },
+        {
+          id: 'amesc_localidades_osm',
+          name: 'Sedes, Vilas e Comunidades Rurais (OSM)',
+          localFile: 'data/amesc_localidades_osm.geojson',
+          geomType: 'point',
+          defaultOpacity: 1,
+          pointStyle: { radius: 5, fillColor: '#033c8e', color: '#ffffff', weight: 1.8, fillOpacity: 0.92 },
+          labelField: 'nome',
+          description: 'Sedes municipais, balneários, distritos e comunidades rurais do Extremo Sul Catarinense.',
+        },
+      ],
+    },
+    {
+      id: 'meio_ambiente',
+      name: '2. Meio Ambiente, Uso do Solo & Unidades de Conservação (FBDS / IMA)',
+      expanded: false,
+      layers: [
+        {
+          id: 'amesc_fbds_uso_solo',
+          name: 'Uso e Cobertura do Solo 5m — Mosaico AMESC (FBDS)',
+          localFile: 'data/amesc_fbds_uso_solo.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.62,
+          colorField: 'CLASSE_USO',
+          colorMap: FBDS_USO_COLORS,
+          style: { color: '#1e293b', weight: 0.3, fillOpacity: 0.58 },
+          description: 'Mapeamento 1:5.000 integrado dos 15 municípios da AMESC (Floresta, Área Antropizada, Silvicultura, Edificada, Água).',
+        },
+        {
+          id: 'amesc_fbds_app',
+          name: 'Áreas de Preservação Permanente — APP 5m (FBDS)',
+          localFile: 'data/amesc_fbds_app.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.66,
+          colorField: 'HIDRO',
+          colorMap: FBDS_APP_COLORS,
+          style: { color: '#047857', weight: 0.4, fillOpacity: 0.52 },
+          description: 'Faixas marginais de APP de rios, nascentes e massas d’água nos 15 municípios (FBDS).',
+        },
+        {
+          id: 'amesc_app_ima',
+          name: 'APP Hidrográfica Oficial SC (IMA-SC)',
+          localFile: 'data/amesc_app_ima.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.55,
+          style: { color: '#065f46', weight: 0.6, fillColor: '#10b981', fillOpacity: 0.42 },
+          description: 'Áreas de Preservação Permanente da hidrografia oficial de Santa Catarina (IMA-SC).',
+        },
+        {
+          id: 'amesc_ucs_mma',
+          name: 'Unidades de Conservação (Parque Nac. Serra Geral / Aparados — MMA)',
+          localFile: 'data/amesc_ucs_mma.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.55,
+          style: { color: '#14532d', weight: 2.2, fillColor: '#16a34a', fillOpacity: 0.34 },
+          description: 'Parques Nacionais da Serra Geral e Aparados da Serra, além de UCs municipais/estaduais (ICMBio/MMA).',
+        },
+        {
+          id: 'amesc_fitogeografico_ima',
+          name: 'Regiões Fitogeográficas de SC (IMA-SC)',
+          localFile: 'data/amesc_fitogeografico_ima.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.45,
+          colorField: 'regiao_fito',
+          colorMap: FITO_COLORS,
+          style: { color: '#14532d', weight: 1, fillOpacity: 0.38 },
+          description: 'Domínios vegetacionais do Extremo Sul Catarinense (IMA-SC).',
+        },
+        {
+          id: 'amesc_vegetacao_ibge',
+          name: 'Unidades de Vegetação 1:250k (IBGE BDIA)',
+          localFile: 'data/amesc_vegetacao_ibge.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.48,
+          style: { color: '#15803d', weight: 0.9, fillColor: '#22c55e', fillOpacity: 0.36 },
+          description: 'Classificação fitoecológica regional do Banco de Dados Ambientais (IBGE BDIA).',
+        },
+        {
+          id: 'amesc_areas_umidas_sigsc',
+          name: 'Áreas Úmidas, Banhados e Restingas (SIGSC / INDE)',
+          localFile: 'data/amesc_areas_umidas_sigsc.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.58,
+          style: { color: '#0d9488', weight: 0.9, fillColor: '#2dd4bf', fillOpacity: 0.44 },
+          description: 'Banhados, turfeiras e áreas úmidas costeiras e fluviais da AMESC (SIGSC/INDE).',
+        },
+      ],
+    },
+    {
+      id: 'licenciamento_ima',
+      name: '3. Licenciamento e Fiscalização Ambiental (IMA-SC)',
+      expanded: false,
+      layers: [
+        {
+          id: 'amesc_licenciamento_ima',
+          name: 'Licenciamento Ambiental — Sinfat (IMA-SC)',
+          localFile: 'data/amesc_licenciamento_ima.geojson',
+          geomType: 'point',
+          defaultOpacity: 0.9,
+          colorField: 'tipo',
+          colorMap: LICENCA_COLORS,
+          pointStyle: { radius: 4.5, fillColor: '#2563eb', color: '#ffffff', weight: 1.2, fillOpacity: 0.9 },
+          description: 'Processos de licenciamento ambiental estadual georreferenciados na AMESC (Sinfat/IMA-SC).',
+        },
+        {
+          id: 'amesc_autos_ima',
+          name: 'Autos de Infração Ambiental — GAIA (IMA-SC)',
+          localFile: 'data/amesc_autos_ima.geojson',
+          geomType: 'point',
+          defaultOpacity: 0.9,
+          pointStyle: { radius: 4.5, fillColor: '#ea580c', color: '#ffffff', weight: 1.2, fillOpacity: 0.9 },
+          description: 'Autos de infração ambiental lavrados na região AMESC (Sistema GAIA/IMA-SC).',
+        },
+        {
+          id: 'amesc_embargos_ima',
+          name: 'Áreas de Embargo Ambiental — GAIA (IMA-SC)',
+          localFile: 'data/amesc_embargos_ima.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.7,
+          style: { color: '#991b1b', weight: 1.8, fillColor: '#ef4444', fillOpacity: 0.48 },
+          description: 'Polígonos de áreas embargadas por fiscalização ambiental estadual (IMA-SC).',
+        },
+      ],
+    },
+    {
+      id: 'hidrografia',
+      name: '4. Hidrografia & Recursos Hídricos (FBDS / IMA / SIGSC / SGB)',
+      expanded: false,
+      layers: [
+        {
+          id: 'amesc_fbds_rios_simples',
+          name: "Rios e Córregos — Drenagem Unifilar (FBDS 15 Municípios)",
+          localFile: 'data/amesc_fbds_rios_simples.geojson',
+          geomType: 'line',
+          defaultOpacity: 0.85,
+          style: { color: '#0284c7', weight: 1.1 },
+          description: 'Rede de drenagem 1:5.000 conectada em toda a região AMESC (FBDS).',
+        },
+        {
+          id: 'amesc_fbds_rios_duplos',
+          name: 'Rios Principais — Margem Dupla (FBDS — Araranguá/Mampituba)',
+          localFile: 'data/amesc_fbds_rios_duplos.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.8,
+          style: { color: '#0369a1', weight: 1, fillColor: '#38bdf8', fillOpacity: 0.65 },
+          description: 'Leitos dos grandes rios regionais (Rio Araranguá, Mampituba, Itoupava, Manoel Alves, da Pedra).',
+        },
+        {
+          id: 'amesc_fbds_massas_dagua',
+          name: "Massas d'Água, Lagoas Costeiras e Açudes (FBDS)",
+          localFile: 'data/amesc_fbds_massas_dagua.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.8,
+          style: { color: '#0369a1', weight: 1, fillColor: '#0ea5e9', fillOpacity: 0.65 },
+          description: 'Lagoas costeiras (Sombrio, Caverá, Serra, Mãe Luzia) e açudes regionais (FBDS).',
+        },
+        {
+          id: 'amesc_fbds_nascentes',
+          name: 'Nascentes Mapeadas (FBDS — 15 Municípios)',
+          localFile: 'data/amesc_fbds_nascentes.geojson',
+          geomType: 'point',
+          defaultOpacity: 0.88,
+          pointStyle: { radius: 2.8, fillColor: '#06b6d4', color: '#0e7490', weight: 0.7, fillOpacity: 0.82 },
+          description: 'Milhares de nascentes mapeadas em escala 1:5.000 em toda a AMESC (FBDS).',
+        },
+        {
+          id: 'amesc_bacias_ima',
+          name: 'Bacias Hidrográficas (Araranguá, Mampituba e Urussanga — IMA)',
+          localFile: 'data/amesc_bacias_ima.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.35,
+          colorField: 'bhi_nm',
+          colorMap: BACIAS_COLORS,
+          style: { color: '#0369a1', weight: 2.2, fillOpacity: 0.2 },
+          description: 'Divisão das grandes bacias hidrográficas regionais (IMA-SC).',
+        },
+        {
+          id: 'amesc_ottobacias_sigsc',
+          name: 'Ottobacias Hidrográficas (ANA / SIGSC)',
+          localFile: 'data/amesc_ottobacias_sigsc.geojson',
+          geomType: 'polygon',
+          outlineMode: true,
+          defaultOpacity: 0.7,
+          style: { color: '#0284c7', weight: 0.9, fillOpacity: 0.03 },
+          description: 'Microbacias ottocodificadas da ANA/SIGSC na AMESC.',
+        },
+        {
+          id: 'amesc_ilhas_sigsc',
+          name: 'Ilhas Fluviais e Estuarinas (SIGSC / INDE)',
+          localFile: 'data/amesc_ilhas_sigsc.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.7,
+          style: { color: '#0f766e', weight: 1.2, fillColor: '#34d399', fillOpacity: 0.5 },
+          description: 'Ilhas mapeadas nos rios e lagoas da região (SIGSC/INDE).',
+        },
+        {
+          id: 'amesc_pocos_siagas',
+          name: 'Poços Tubulares Cadastrados (SIAGAS / SGB — 422)',
+          localFile: 'data/amesc_pocos_siagas.geojson',
+          geomType: 'point',
+          defaultOpacity: 1,
+          pointStyle: { radius: 4.5, fillColor: '#2563eb', color: '#ffffff', weight: 1.5, fillOpacity: 0.92 },
+          description: 'Poços tubulares subterrâneos cadastrados no Sistema SIAGAS (SGB/CPRM).',
+        },
+      ],
+    },
+    {
+      id: 'defesa_civil',
+      name: '5. Defesa Civil & Riscos Geológicos (SGB/CPRM & RIGeo)',
+      expanded: true,
+      layers: [
+        {
+          id: 'amesc_setores_risco_sgb',
+          name: 'Setores de Risco Geológico Mapeados (SGB/CPRM — 220)',
+          localFile: 'data/amesc_setores_risco_sgb.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.74,
+          colorField: 'grau_risco',
+          colorMap: RISCO_GRAU_COLORS,
+          style: { color: '#7f1d1d', weight: 1.8, fillOpacity: 0.65 },
+          description: 'Setorização oficial de risco alto e muito alto a inundações e deslizamentos na AMESC (SGB/CPRM).',
+        },
+        {
+          id: 'amesc_suscet_inundacao_sgb',
+          name: 'Suscetibilidade a Inundações — RIGeo SGB (Araranguá, Jacinto, Maracajá, Timbé)',
+          localFile: 'data/amesc_suscet_inundacao_sgb.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.58,
+          colorField: 'Classe',
+          colorMap: SUSCET_COLORS,
+          style: { color: '#1e3a8a', weight: 0.6, fillOpacity: 0.52 },
+          description: 'Cartas de Suscetibilidade a Inundações integradas do RIGeo SGB/CPRM.',
+        },
+        {
+          id: 'amesc_suscet_movmassa_sgb',
+          name: 'Suscetibilidade a Movimentos de Massa — RIGeo SGB',
+          localFile: 'data/amesc_suscet_movmassa_sgb.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.56,
+          colorField: 'Classe',
+          colorMap: SUSCET_COLORS,
+          style: { color: '#7c2d12', weight: 0.5, fillOpacity: 0.5 },
+          description: 'Cartas de Suscetibilidade a Deslizamentos e Quedas de Rocha integradas do RIGeo SGB/CPRM.',
+        },
+      ],
+    },
+    {
+      id: 'geografia_fisica',
+      name: '6. Geologia, Geomorfologia, Solos & Declividade (IBGE BDIA / IMA / SGB)',
+      expanded: false,
+      layers: [
+        {
+          id: 'amesc_declividade_ima',
+          name: 'Declividade do Terreno — 5 Classes (IMA-SC / SIGSC)',
+          localFile: 'data/amesc_declividade_ima.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.58,
+          colorField: 'classe_decliv',
+          colorMap: DECLIV_COLORS,
+          style: { color: '#475569', weight: 0.2, fillOpacity: 0.52 },
+          description: 'Declividade das encostas da Serra Geral até as planícies costeiras (0–5% Plano até >45% Escarpado).',
+        },
+        {
+          id: 'amesc_geologia_ibge',
+          name: 'Mapa Geológico / Litologia 1:250k (IBGE BDIA)',
+          localFile: 'data/amesc_geologia_ibge.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.55,
+          style: { color: '#334155', weight: 0.9, fillColor: '#d97706', fillOpacity: 0.45 },
+          description: 'Unidades geológicas regionais da Serra Geral, Botucatu, Bacia do Paraná e Planície Quaternária (IBGE BDIA).',
+        },
+        {
+          id: 'amesc_geomorfologia_ibge',
+          name: 'Geomorfologia e Unidades de Relevo (IBGE BDIA)',
+          localFile: 'data/amesc_geomorfologia_ibge.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.55,
+          colorField: 'nm_regiao',
+          colorMap: GEOMORF_COLORS,
+          style: { color: '#475569', weight: 0.9, fillOpacity: 0.46 },
+          description: 'Planalto das Araucárias, Depressão Carbonífera e Planícies Costeiras/Deltáicas (IBGE BDIA).',
+        },
+        {
+          id: 'amesc_pedologia_ibge',
+          name: 'Mapa de Solos / Pedologia 1:250k (IBGE BDIA)',
+          localFile: 'data/amesc_pedologia_ibge.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.55,
+          colorField: 'ordem',
+          colorMap: PEDOLOGIA_COLORS,
+          style: { color: '#475569', weight: 0.9, fillOpacity: 0.46 },
+          description: 'Cambissolos, Gleissolos, Argissolos, Neossolos e Espodossolos da região AMESC (IBGE BDIA).',
+        },
+        {
+          id: 'amesc_hidrogeologia_sgb',
+          name: 'Domínios Hidrogeológicos / Aquíferos (SGB/CPRM)',
+          localFile: 'data/amesc_hidrogeologia_sgb.geojson',
+          geomType: 'polygon',
+          defaultOpacity: 0.48,
+          style: { color: '#1d4ed8', weight: 1.1, fillColor: '#3b82f6', fillOpacity: 0.34 },
+          description: 'Domínios aquíferos e hidrogeológicos regionais (SGB/CPRM).',
+        },
+      ],
+    },
+    {
+      id: 'infraestrutura_viario',
+      name: '7. Sistema Viário, Rodovias, Energia & Equipamentos (DNIT / ANEEL / CNES / OSM)',
+      expanded: false,
+      layers: [
+        {
+          id: 'amesc_rodovias_dnit',
+          name: 'Rodovias Federais Vigentes — BR-101 / BR-285 (DNIT SNV)',
+          localFile: 'data/amesc_rodovias_dnit.geojson',
+          geomType: 'line',
+          defaultOpacity: 0.95,
+          style: { color: '#991b1b', weight: 3.4 },
+          description: 'Traçado oficial do Sistema Nacional de Viação (BR-101 e BR-285) na AMESC (DNIT).',
+        },
+        {
+          id: 'amesc_pontes_dnit',
+          name: 'Pontes e Viadutos Federais — OAE (DNIT — 85)',
+          localFile: 'data/amesc_pontes_dnit.geojson',
+          geomType: 'point',
+          defaultOpacity: 1,
+          pointStyle: { radius: 5, fillColor: '#b91c1c', color: '#ffffff', weight: 1.5, fillOpacity: 0.95 },
+          description: 'Obras de Arte Especiais federais cadastradas pelo DNIT.',
+        },
+        {
+          id: 'amesc_rodovias_osm',
+          name: 'Rodovias Estaduais e Eixos Regionais (OSM)',
+          localFile: 'data/amesc_rodovias_osm.geojson',
+          geomType: 'line',
+          defaultOpacity: 0.92,
+          colorField: 'jurisdicao',
+          colorMap: RODOVIA_COLORS,
+          style: { color: '#dc2626', weight: 2.6 },
+          description: 'Rodovias SC-108, SC-285, SC-290, SC-447, SC-448, SC-449 e acessos regionais (OSM).',
+        },
+        {
+          id: 'amesc_sistema_viario_osm',
+          name: 'Logradouros e Estradas Municipais (OSM)',
+          localFile: 'data/amesc_sistema_viario_osm.geojson',
+          geomType: 'line',
+          defaultOpacity: 0.85,
+          colorField: 'hierarquia',
+          colorMap: VIARIO_COLORS,
+          style: { color: '#f59e0b', weight: 1.5 },
+          description: 'Arruamento urbano e estradas municipais/rurais de todos os 15 municípios (OSM).',
+        },
+        {
+          id: 'amesc_pontes_osm',
+          name: 'Pontes e Travessias Viárias (OSM)',
+          localFile: 'data/amesc_pontes_osm.geojson',
+          geomType: 'point',
+          defaultOpacity: 0.92,
+          pointStyle: { radius: 4, fillColor: '#b45309', color: '#ffffff', weight: 1.2, fillOpacity: 0.9 },
+          description: 'Pontes urbanas e rurais mapeadas na região (OpenStreetMap).',
+        },
+        {
+          id: 'amesc_saude_cnes',
+          name: 'Unidades de Saúde Ativas — DataSUS / CNES (775)',
+          localFile: 'data/amesc_saude_cnes.geojson',
+          geomType: 'point',
+          defaultOpacity: 1,
+          colorField: 'esfera',
+          colorMap: SAUDE_COLORS,
+          pointStyle: { radius: 5.5, fillColor: '#dc2626', color: '#ffffff', weight: 1.6, fillOpacity: 0.95 },
+          description: '775 estabelecimentos de saúde ativos nos 15 municípios da AMESC (Hospitais, UBSs, UPAs, Clínicas — CNES).',
+        },
+        {
+          id: 'amesc_escolas_osm',
+          name: 'Escolas, CEIs e Universidades (OSM)',
+          localFile: 'data/amesc_escolas_osm.geojson',
+          geomType: 'point',
+          defaultOpacity: 1,
+          pointStyle: { radius: 5.5, fillColor: '#2563eb', color: '#ffffff', weight: 1.6, fillOpacity: 0.95 },
+          description: 'Unidades escolares e campi universitários (UFSC Araranguá, IFSC, etc.) na AMESC.',
+        },
+        {
+          id: 'amesc_equipamentos_osm',
+          name: 'Equipamentos Públicos e Segurança (OSM)',
+          localFile: 'data/amesc_equipamentos_osm.geojson',
+          geomType: 'point',
+          defaultOpacity: 1,
+          pointStyle: { radius: 5, fillColor: '#7c3aed', color: '#ffffff', weight: 1.5, fillOpacity: 0.92 },
+          description: 'Prefeituras, bombeiros, delegacias, correios, bibliotecas e centros comunitários.',
+        },
+        {
+          id: 'amesc_aneel_concessao',
+          name: 'Área de Concessão Elétrica — CELESC & Cooperativas (ANEEL)',
+          localFile: 'data/amesc_aneel_concessao.geojson',
+          geomType: 'polygon',
+          outlineMode: true,
+          defaultOpacity: 0.85,
+          style: { color: '#eab308', weight: 2, dashArray: '5 3', fillOpacity: 0.06 },
+          description: 'Distribuidoras e cooperativas de energia elétrica atuantes na AMESC (ANEEL SIGEL).',
+        },
+        {
+          id: 'amesc_areas_industriais_osm',
+          name: 'Áreas Industriais e Empresariais (OSM)',
+          localFile: 'data/amesc_areas_industriais_osm.geojson',
+          geomType: 'point',
+          defaultOpacity: 0.95,
+          pointStyle: { radius: 5, fillColor: '#ea580c', color: '#ffffff', weight: 1.4, fillOpacity: 0.92 },
+          description: 'Polos industriais e distritos empresariais mapeados na região.',
+        },
+      ],
+    },
+    {
+      id: 'turismo_patrimonio',
+      name: '8. Turismo, Cânions, Praias & Patrimônio IPHAN',
+      expanded: false,
+      layers: [
+        {
+          id: 'amesc_iphan_sitios',
+          name: 'Sítios Arqueológicos / Sambaquis — IPHAN/CNSA (55)',
+          localFile: 'data/amesc_iphan_sitios.geojson',
+          geomType: 'point',
+          defaultOpacity: 1,
+          pointStyle: { radius: 6, fillColor: '#9333ea', color: '#ffffff', weight: 1.8, fillOpacity: 0.95 },
+          description: '55 sítios arqueológicos pré-coloniais (sambaquis e sítios históricos) cadastrados no IPHAN na AMESC.',
+        },
+        {
+          id: 'amesc_turismo_osm',
+          name: 'Atrativos Turísticos, Cânions, Cachoeiras e Praias (OSM)',
+          localFile: 'data/amesc_turismo_osm.geojson',
+          geomType: 'point',
+          defaultOpacity: 1,
+          pointStyle: { radius: 5.5, fillColor: '#059669', color: '#ffffff', weight: 1.6, fillOpacity: 0.95 },
+          description: 'Cânions (Itaimbezinho, Fortaleza, Malacara, Índios Coroados), cachoeiras, praias e balneários.',
+        },
+        {
+          id: 'amesc_trilhas_osm',
+          name: 'Trilhas Ecológicas e Cânions (OSM)',
+          localFile: 'data/amesc_trilhas_osm.geojson',
+          geomType: 'line',
+          defaultOpacity: 0.9,
+          style: { color: '#16a34a', weight: 2.2, dashArray: '5 4' },
+          description: 'Trilhas de ecoturismo na Serra Geral e litoral do Extremo Sul Catarinense.',
+        },
+      ],
+    },
+  ];
+
+  // Downloads Oficiais Agrupados
+  const OFFICIAL_DOWNLOADS = [
+    {
+      id: 'limites-cadastro',
+      title: 'Limites Intermunicipais, Cadastro Rural (INCRA) & Censo 2022 (IBGE)',
+      items: [
+        { label: 'Mosaico dos 15 Municípios da AMESC (IBGE SIRGAS 2000)', format: 'GeoJSON (15 municípios)', localFile: 'data/amesc_municipios.geojson', layerId: 'amesc_municipios' },
+        { label: 'Distritos (26) e Bairros (69) — Censo IBGE 2022', format: 'GeoJSON', localFile: 'data/amesc_distritos_ibge.geojson', layerId: 'amesc_distritos_ibge' },
+        { label: 'Setores Censitários — Censo 2022 (614 setores)', format: 'GeoJSON', localFile: 'data/amesc_setores_ibge.geojson', layerId: 'amesc_setores_ibge' },
+        { label: 'Imóveis Rurais Certificados — INCRA/SIGEF (1.143 parcelas)', format: 'GeoJSON', localFile: 'data/amesc_incra_sigef.geojson', layerId: 'amesc_incra_sigef' },
+        { label: 'Indicadores Socioeconômicos Completos AMESC (15 Municípios — IBGE SIDRA)', format: 'JSON Estruturado', localFile: 'data/amesc_indicadores.json' },
+      ],
+    },
+    {
+      id: 'ambiente-fbds-ima',
+      title: 'Meio Ambiente, Uso do Solo 5m (FBDS) & Fiscalização (IMA-SC)',
+      items: [
+        { label: 'Uso e Cobertura do Solo 5m — Mosaico 15 Municípios (FBDS)', format: 'GeoJSON', localFile: 'data/amesc_fbds_uso_solo.geojson', layerId: 'amesc_fbds_uso_solo' },
+        { label: 'Áreas de Preservação Permanente — APP 5m (FBDS)', format: 'GeoJSON', localFile: 'data/amesc_fbds_app.geojson', layerId: 'amesc_fbds_app' },
+        { label: 'Unidades de Conservação — Parques Nacionais Serra Geral / Aparados (MMA)', format: 'GeoJSON', localFile: 'data/amesc_ucs_mma.geojson', layerId: 'amesc_ucs_mma' },
+        { label: 'Licenciamento Ambiental Sinfat & Autos GAIA (IMA-SC)', format: 'GeoJSON', localFile: 'data/amesc_licenciamento_ima.geojson', layerId: 'amesc_licenciamento_ima' },
+      ],
+    },
+    {
+      id: 'riscos-fisica',
+      title: 'Defesa Civil (SGB/CPRM), Geologia, Solos & Hidrografia',
+      items: [
+        { label: 'Setores de Risco Geológico Mapeados na AMESC (SGB/CPRM — 220)', format: 'GeoJSON', localFile: 'data/amesc_setores_risco_sgb.geojson', layerId: 'amesc_setores_risco_sgb' },
+        { label: 'Suscetibilidade a Inundações e Movimentos de Massa (RIGeo SGB)', format: 'GeoJSON', localFile: 'data/amesc_suscet_inundacao_sgb.geojson', layerId: 'amesc_suscet_inundacao_sgb' },
+        { label: 'Hidrografia FBDS (Rios Simples, Duplos, Lagoas e Nascentes)', format: 'GeoJSON', localFile: 'data/amesc_fbds_rios_duplos.geojson', layerId: 'amesc_fbds_rios_duplos' },
+        { label: 'Geologia, Geomorfologia e Pedologia 1:250k (IBGE BDIA)', format: 'GeoJSON', localFile: 'data/amesc_geologia_ibge.geojson', layerId: 'amesc_geologia_ibge' },
+      ],
+    },
+    {
+      id: 'infra-saude-patrimonio',
+      title: 'Infraestrutura, Saúde (CNES), Rodovias (DNIT) & Patrimônio (IPHAN)',
+      items: [
+        { label: 'Unidades de Saúde Ativas nos 15 Municípios — DataSUS / CNES (775)', format: 'GeoJSON', localFile: 'data/amesc_saude_cnes.geojson', layerId: 'amesc_saude_cnes' },
+        { label: 'Rodovias Federais BR-101/BR-285 (DNIT SNV) & OAE (85)', format: 'GeoJSON', localFile: 'data/amesc_rodovias_dnit.geojson', layerId: 'amesc_rodovias_dnit' },
+        { label: 'Sítios Arqueológicos / Sambaquis — IPHAN/CNSA (55)', format: 'GeoJSON', localFile: 'data/amesc_iphan_sitios.geojson', layerId: 'amesc_iphan_sitios' },
+      ],
+    },
+  ];
+
+  // Conjuntos Temáticos Prontos ("Combos")
+  const THEMATIC_PRESETS = [
+    {
+      id: 'mosaico_regional',
+      title: 'Mosaico Político-Territorial AMESC (15 Municípios)',
+      desc: 'Divisas intermunicipais (SEPLAN/IBGE), 26 Distritos, 69 Bairros e Rodovias Federais BR-101/BR-285.',
+      basemap: 'satelite_hibrido',
+      layers: ['amesc_municipios', 'amesc_distritos_ibge', 'amesc_rodovias_dnit', 'amesc_localidades_osm'],
+      center: AMESC_CENTER,
+      zoom: 10,
+      color: '#033c8e',
+    },
+    {
+      id: 'defesa_civil_regional',
+      title: 'Defesa Civil & Riscos Geológicos (SGB/CPRM)',
+      desc: '220 setores oficiais de risco na AMESC + Cartas de Suscetibilidade (RIGeo) e Bacias Hidrográficas.',
+      basemap: 'satelite_hibrido',
+      layers: ['amesc_municipios', 'amesc_bacias_ima', 'amesc_setores_risco_sgb', 'amesc_suscet_inundacao_sgb'],
+      center: [-28.97, -49.68],
+      zoom: 10,
+      color: '#dc2626',
+    },
+    {
+      id: 'ambiente_fbds_ucs',
+      title: 'Meio Ambiente, FBDS 5m, APPs & Parques Nacionais',
+      desc: 'Cobertura da Terra 5m nos 15 municípios, APPs, Banhados/Áreas Úmidas e Parques Nacionais da Serra Geral e Aparados.',
+      basemap: 'satelite_global',
+      layers: ['amesc_municipios', 'amesc_fbds_uso_solo', 'amesc_ucs_mma', 'amesc_areas_umidas_sigsc'],
+      center: [-29.02, -49.78],
+      zoom: 10,
+      color: '#059669',
+    },
+    {
+      id: 'hidrografia_lagoas',
+      title: 'Hidrografia, Lagoas Costeiras & Poços SIAGAS',
+      desc: 'Bacias Araranguá, Mampituba e Urussanga, rios principais, lagoas costeiras e 422 poços SIAGAS.',
+      basemap: 'orto_sigsc_2012',
+      layers: ['amesc_municipios', 'amesc_bacias_ima', 'amesc_fbds_rios_duplos', 'amesc_fbds_massas_dagua', 'amesc_pocos_siagas'],
+      center: [-29.00, -49.62],
+      zoom: 10,
+      color: '#0284c7',
+    },
+    {
+      id: 'saude_infra_logistica',
+      title: 'Saúde (775 CNES), Educação, Rodovias & Energia',
+      desc: 'Rede regional de saúde DataSUS/CNES, escolas, rodovias DNIT/estaduais e concessão elétrica ANEEL.',
+      basemap: 'satelite_hibrido',
+      layers: ['amesc_municipios', 'amesc_rodovias_dnit', 'amesc_rodovias_osm', 'amesc_saude_cnes', 'amesc_escolas_osm'],
+      center: [-28.98, -49.65],
+      zoom: 10,
+      color: '#7c3aed',
+    },
+    {
+      id: 'turismo_iphan_canions',
+      title: 'Turismo, Cânions, Praias & Sítios Arqueológicos IPHAN',
+      desc: '55 sítios arqueológicos/sambaquis IPHAN, Parques Nacionais dos Cânions, trilhas e atrativos costeiros.',
+      basemap: 'opentopomap',
+      layers: ['amesc_municipios', 'amesc_ucs_mma', 'amesc_iphan_sitios', 'amesc_turismo_osm', 'amesc_trilhas_osm'],
+      center: [-29.06, -49.82],
+      zoom: 10,
+      color: '#0d9488',
+    },
+  ];
+
+  function getLayerById(id) {
+    for (const g of LAYER_GROUPS) {
+      const found = g.layers.find((l) => l.id === id);
+      if (found) return { layer: found, group: g };
+    }
+    return null;
+  }
+
+  function getAllLayers() {
+    const out = [];
+    for (const g of LAYER_GROUPS) {
+      for (const l of g.layers) out.push({ ...l, groupId: g.id, groupName: g.name });
+    }
+    return out;
+  }
+
+  return {
+    SIGSC_WMS,
+    TRANSPARENT_TILE,
+    AMESC_CENTER,
+    AMESC_BOUNDS,
+    BASEMAPS,
+    LAYER_GROUPS,
+    OFFICIAL_DOWNLOADS,
+    THEMATIC_PRESETS,
+    getLayerById,
+    getAllLayers,
+  };
+})();
