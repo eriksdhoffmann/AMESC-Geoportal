@@ -1,10 +1,8 @@
 /**
- * Geoportal Regional da AMESC — Controlador da Página Dedicada de Downloads com Buscador Instantâneo
- * Lista todas as camadas do catálogo + mapas base + documentos oficiais da Prefeitura (PDF),
- * permitindo filtro por texto e tipo de origem, consulta aos 21 campos de metadados e download em GeoJSON/CSV.
+ * Geoportal Regional da AMESC — Página de Downloads (Padrão Institucional Geoportal Florianópolis)
  */
 (() => {
-  const { BASEMAPS, LAYER_GROUPS, getLayerById } = window.GeoCatalog;
+  const { BASEMAPS, LAYER_GROUPS } = window.GeoCatalog;
   const Meta = window.GeoMetadata;
 
   const esc = (s) =>
@@ -13,93 +11,189 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+
   const norm = (s) =>
     String(s || '')
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .toLowerCase();
 
-  // Documentos Oficiais SGB/CPRM (RIGeo Região AMESC) e IBGE
+  // Rótulos curtos e institucionais por grupo (sem numeração artificial nem excesso de símbolos)
+  const GROUP_PREFIX = {
+    territorio_cadastro: 'Cadastro e Limites',
+    meio_ambiente: 'Meio Ambiente',
+    licenciamento_ima: 'Licenciamento Ambiental',
+    hidrografia: 'Hidrografia',
+    defesa_civil: 'Defesa Civil',
+    geografia_fisica: 'Geologia e Relevo',
+    infraestrutura_viario: 'Infraestrutura e Serviços',
+    turismo_patrimonio: 'Patrimônio e Turismo',
+    camadas_personalizadas: 'Estudos Técnicos',
+    __basemaps__: 'Ortoimagens e Mapas Base',
+    __docs__: 'Indicadores e Referências',
+  };
+
+  const SECTIONS = [
+    {
+      id: 'ALL_SIG',
+      navLabel: 'Camadas em SIG do mapa',
+      title: 'Camadas em SIG do mapa',
+      subtitle: 'Acesse os arquivos vetoriais publicados no mapa interativo do GeoPortal',
+    },
+    {
+      id: 'territorio_cadastro',
+      navLabel: 'Cadastro e Limites Territoriais',
+      title: 'Cadastro e Limites Territoriais',
+      subtitle: 'Malhas municipais, distritos, bairros, setores censitários e parcelas certificadas',
+    },
+    {
+      id: 'meio_ambiente',
+      navLabel: 'Meio Ambiente e Uso do Solo',
+      title: 'Meio Ambiente e Uso do Solo',
+      subtitle: 'Cobertura da terra, áreas de preservação permanente, vegetação e unidades de conservação',
+    },
+    {
+      id: 'licenciamento_ima',
+      navLabel: 'Licenciamento Ambiental',
+      title: 'Licenciamento e Fiscalização Ambiental',
+      subtitle: 'Registros oficiais de licenciamento, autos de infração e áreas embargadas (IMA-SC)',
+    },
+    {
+      id: 'hidrografia',
+      navLabel: 'Hidrografia e Recursos Hídricos',
+      title: 'Hidrografia e Recursos Hídricos',
+      subtitle: 'Cursos d’água, nascentes, lagoas costeiras, bacias hidrográficas e poços tubulares',
+    },
+    {
+      id: 'defesa_civil',
+      navLabel: 'Defesa Civil e Áreas de Risco',
+      title: 'Defesa Civil e Áreas de Risco',
+      subtitle: 'Setores de risco geológico e cartas de suscetibilidade a inundações e movimentos de massa',
+    },
+    {
+      id: 'geografia_fisica',
+      navLabel: 'Geologia, Solos e Relevo',
+      title: 'Geologia, Geomorfologia, Solos e Relevo',
+      subtitle: 'Mapeamentos físicos oficiais do IBGE (BDIA), classes de declividade e hidrogeologia',
+    },
+    {
+      id: 'infraestrutura_viario',
+      navLabel: 'Infraestrutura, Saúde e Educação',
+      title: 'Infraestrutura, Sistema Viário, Saúde e Educação',
+      subtitle: 'Rodovias, rede viária, pontes, unidades de saúde (CNES), escolas e energia elétrica',
+    },
+    {
+      id: 'turismo_patrimonio',
+      navLabel: 'Patrimônio e Turismo',
+      title: 'Patrimônio Arqueológico e Geoturismo',
+      subtitle: 'Sítios cadastrados no IPHAN, trilhas, mirantes e atrativos dos cânions e litoral',
+    },
+    {
+      id: '__basemaps__',
+      navLabel: 'Ortoimagens e Mapas Base',
+      title: 'Ortoimagens e Modelos Digitais de Terreno',
+      subtitle: 'Serviços WMS oficiais do Estado de Santa Catarina (SIGSC) e bases cartográficas de referência',
+    },
+    {
+      id: '__docs__',
+      navLabel: 'Indicadores e Documentos Técnicos',
+      title: 'Indicadores Socioeconômicos e Bases Estaduais',
+      subtitle: 'Séries consolidadas dos 15 municípios da AMESC e portais técnicos oficiais',
+    },
+  ];
+
+  // Limpa travessões longos e contagens brutas para manter padrão institucional limpo
+  function cleanDisplayName(raw) {
+    return String(raw || '')
+      .replace(/\s*—\s*/g, ' - ')
+      .replace(/\(\s*([^)]*?)\s*-\s*\d[\d.]*\s*\)/g, '($1)')
+      .trim();
+  }
+
   const MUNICIPAL_DOCS = [
     {
       id: 'doc_amesc_ind_json',
-      name: 'Indicadores Socioeconômicos dos 15 Municípios da AMESC (IBGE SIDRA)',
-      category: 'Indicadores Regionais & SEPLAN',
+      name: 'Indicadores Socioeconômicos Consolidados dos 15 Municípios (Censo 2022, PIB, PAM e CNES)',
+      category: 'Indicadores e Referências',
       sourceClass: 'Oficial',
-      whatIsThis: 'Arquivo JSON consolidado com Censo 2022, PIB Municipal, Lavouras PAM, Uso do Solo FBDS e links RIGeo SGB/CPRM para os 15 municípios.',
-      format: 'JSON Oficial (IBGE SIDRA)',
+      whatIsThis: 'Base consolidada com Censo 2022, PIB Municipal, Produção Agrícola Municipal e unidades ativas do CNES para os 15 municípios da AMESC.',
+      format: 'JSON (UTF-8)',
       localFile: 'data/amesc_indicadores.json',
-      orgao: 'IBGE / FBDS / SGB',
+      downloadLabel: 'JSON',
+      orgao: 'IBGE / DataSUS / AMESC',
     },
     {
       id: 'doc_seplan_divisas',
-      name: 'Portal Oficial de Divisas Intermunicipais de Santa Catarina (SEPLAN / DITER)',
-      category: 'Indicadores Regionais & SEPLAN',
+      name: 'Divisas Intermunicipais Oficiais do Estado de Santa Catarina (SEPLAN / DITER)',
+      category: 'Indicadores e Referências',
       sourceClass: 'Oficial',
-      whatIsThis: 'Referência estadual oficial de limites e memoriais descritivos dos municípios catarinenses.',
-      format: 'Portal Oficial SC (SEPLAN)',
+      whatIsThis: 'Portal estadual oficial de divisas e memoriais descritivos dos municípios catarinenses.',
+      format: 'Portal Institucional',
       externalUrl: 'https://divisasintermunicipais.sc.gov.br/',
+      downloadLabel: 'ACESSAR',
       orgao: 'SEPLAN / Governo de Santa Catarina',
     },
     {
       id: 'doc_sigsc_portal',
-      name: 'SIGSC — Aerolevantamento Oficial de Santa Catarina (Ortofoto 39cm & MDT/MDS)',
-      category: 'Indicadores Regionais & SEPLAN',
+      name: 'Sistema de Informações Geográficas de Santa Catarina - Ortofotos e MDT (SIGSC)',
+      category: 'Indicadores e Referências',
       sourceClass: 'Oficial',
-      whatIsThis: 'Portal estadual de ortofotos e modelos digitais de terreno/superfície integrados via WMS no Geoportal AMESC.',
-      format: 'Serviço WMS / Portal SIGSC',
+      whatIsThis: 'Acervo aerofotogramétrico oficial de Santa Catarina (ortofotomosaicos de 39 cm, MDT e MDS).',
+      format: 'Serviço WMS / Acervo Estadual',
       externalUrl: 'https://sigsc.sc.gov.br/',
-      orgao: 'Governo de SC — SDS / SIGSC',
+      downloadLabel: 'ACESSAR',
+      orgao: 'Governo do Estado de Santa Catarina',
     },
   ];
 
-  // Unify all items into searchable records
   const ALL_ITEMS = [];
+
   for (const g of LAYER_GROUPS) {
+    if (g.id === 'camadas_personalizadas' && (!g.layers || !g.layers.length)) continue;
+    const prefix = GROUP_PREFIX[g.id] || g.name;
     for (const l of g.layers) {
       const m = Meta.getEntry(l.id, { ...l, groupName: g.name });
+      const cleanName = cleanDisplayName(l.name);
       ALL_ITEMS.push({
         kind: 'layer',
         id: l.id,
         groupId: g.id,
-        groupName: g.name,
-        name: l.name,
+        prefix,
+        displayLine: `- ${prefix} - ${cleanName}`,
+        cleanName,
         cfg: l,
         metaEntry: m,
-        sourceClass: m.sourceClass,
-        whatIsThis: m.whatIsThis,
-        format: m.metadata.formato,
-        orgao: m.metadata.orgao_responsavel,
-        redistributable: m.redistributable && l.type !== 'wms',
-        searchHaystack: norm(`${l.name} ${g.name} ${m.whatIsThis} ${m.metadata.orgao_responsavel} ${m.metadata.instituicao_fornecedora} ${m.metadata.formato} ${m.sourceClass}`),
+        redistributable: m.redistributable !== false && Boolean(l.localFile) && l.type !== 'wms',
+        searchHaystack: norm(`${prefix} ${cleanName} ${l.name} ${g.name} ${m.whatIsThis} ${m.metadata.orgao_responsavel}`),
       });
     }
   }
+
   for (const bm of BASEMAPS) {
-    const m = Meta.getEntry(bm.id, { ...bm, groupName: 'Mapas Base & Ortoimagens' });
+    const m = Meta.getEntry(bm.id, { ...bm, groupName: 'Ortoimagens e Mapas Base' });
+    const cleanName = cleanDisplayName(bm.name);
     ALL_ITEMS.push({
       kind: 'basemap',
       id: bm.id,
       groupId: '__basemaps__',
-      groupName: 'Mapas Base & Ortoimagens',
-      name: bm.name,
+      prefix: GROUP_PREFIX.__basemaps__,
+      displayLine: `- Ortoimagens e Mapas Base - ${cleanName}`,
+      cleanName,
       cfg: bm,
       metaEntry: m,
-      sourceClass: m.sourceClass,
-      whatIsThis: m.whatIsThis,
-      format: m.metadata.formato,
-      orgao: m.metadata.orgao_responsavel,
       redistributable: false,
-      searchHaystack: norm(`${bm.name} ${bm.category} ${m.whatIsThis} ${m.metadata.orgao_responsavel} ${bm.year}`),
+      searchHaystack: norm(`ortoimagens mapas base ${cleanName} ${bm.category || ''} ${m.metadata.orgao_responsavel}`),
     });
   }
+
   for (const d of MUNICIPAL_DOCS) {
     ALL_ITEMS.push({
       kind: 'doc',
       id: d.id,
       groupId: '__docs__',
-      groupName: d.category,
-      name: d.name,
+      prefix: GROUP_PREFIX.__docs__,
+      displayLine: `- Indicadores e Referências - ${d.name}`,
+      cleanName: d.name,
       cfg: d,
       metaEntry: Meta.makeMeta({
         sourceClass: d.sourceClass,
@@ -107,29 +201,25 @@
         nome_camada: d.name,
         categoria: d.category,
         orgao_responsavel: d.orgao,
-        instituicao_fornecedora: 'Portal Atende.Net — Prefeitura de Região AMESC',
-        url_fonte_original: 'https://jacinto_machado.atende.net/cidadao/pagina/servicos',
-        url_download_ou_servico: d.externalUrl,
+        instituicao_fornecedora: d.orgao,
+        url_fonte_original: d.externalUrl || 'data/amesc_indicadores.json',
+        url_download_ou_servico: d.externalUrl || d.localFile,
         formato: d.format,
-        tipo_geometria: 'Documento Cartográfico / Legal (PDF)',
-        status_validacao: 'DISPONÍVEL, MAS NÃO INTEGRADA',
+        tipo_geometria: 'Tabela / Base Alfanumérica',
+        status_validacao: 'PUBLICADO',
       }),
-      sourceClass: d.sourceClass,
-      whatIsThis: d.whatIsThis,
-      format: d.format,
-      orgao: d.orgao,
-      redistributable: false,
-      searchHaystack: norm(`${d.name} ${d.category} ${d.whatIsThis} ${d.orgao} pdf`),
+      redistributable: Boolean(d.localFile),
+      searchHaystack: norm(`indicadores referencias ${d.name} ${d.whatIsThis} ${d.orgao}`),
     });
   }
 
-  let selectedCat = 'ALL';
-  let selectedSrc = 'ALL';
+  let selectedSectionId = 'ALL_SIG';
   let queryText = '';
 
   const searchInput = document.getElementById('dlSearchInput');
+  const clearBtn = document.getElementById('dlSearchClear');
   const urlQ = new URLSearchParams(window.location.search).get('q');
-  if (urlQ) {
+  if (urlQ && searchInput) {
     queryText = urlQ;
     searchInput.value = urlQ;
   }
@@ -137,88 +227,70 @@
   function getFilteredItems() {
     const q = norm(queryText.trim());
     return ALL_ITEMS.filter((it) => {
-      if (selectedCat !== 'ALL' && it.groupId !== selectedCat) return false;
-      if (selectedSrc !== 'ALL' && it.sourceClass !== selectedSrc) return false;
+      // Se há busca digitada na aba geral, pesquisa em todo o catálogo
+      if (selectedSectionId === 'ALL_SIG') {
+        if (!q && it.kind !== 'layer') return false;
+      } else if (it.groupId !== selectedSectionId) {
+        return false;
+      }
       if (q && !it.searchHaystack.includes(q)) return false;
       return true;
     });
   }
 
   function renderSidebar() {
-    const list = document.getElementById('dlCategoryList');
-    const q = norm(queryText.trim());
-    const baseFiltered = ALL_ITEMS.filter(
-      (it) => (selectedSrc === 'ALL' || it.sourceClass === selectedSrc) && (!q || it.searchHaystack.includes(q))
-    );
-    const counts = {};
-    for (const it of baseFiltered) counts[it.groupId] = (counts[it.groupId] || 0) + 1;
+    const navEl = document.getElementById('dlCategoryList');
+    if (!navEl) return;
+    navEl.innerHTML = SECTIONS.map(
+      (s) => `
+      <button type="button" class="dl-nav-item ${selectedSectionId === s.id ? 'active' : ''}" data-sec-id="${esc(s.id)}">
+        ${esc(s.navLabel)}
+      </button>`
+    ).join('');
+  }
 
-    const cats = [
-      { id: 'ALL', label: 'Todas as Categorias', count: baseFiltered.length },
-      ...LAYER_GROUPS.map((g) => ({ id: g.id, label: g.name, count: counts[g.id] || 0 })),
-      { id: '__basemaps__', label: 'Mapas Base & Ortoimagens', count: counts['__basemaps__'] || 0 },
-      { id: '__docs__', label: 'Documentos Oficiais Prefeitura (PDF)', count: counts['__docs__'] || 0 },
-    ];
-
-    list.innerHTML = cats
-      .map(
-        (c) => `
-        <button class="dl-cat-btn ${selectedCat === c.id ? 'active' : ''}" data-cat-id="${esc(c.id)}">
-          <span>${esc(c.label)}</span>
-          <span class="gp-badge-count">${c.count}</span>
-        </button>`
-      )
-      .join('');
+  function renderHeader() {
+    const sec = SECTIONS.find((s) => s.id === selectedSectionId) || SECTIONS[0];
+    const titleEl = document.getElementById('dlSectionTitle');
+    const subEl = document.getElementById('dlSectionSubtitle');
+    if (titleEl) titleEl.textContent = sec.title;
+    if (subEl) subEl.textContent = sec.subtitle;
   }
 
   function renderResults() {
     const items = getFilteredItems();
     const box = document.getElementById('dlResults');
     const summary = document.getElementById('dlResultSummary');
-    summary.textContent = `Exibindo ${items.length} de ${ALL_ITEMS.length} itens`;
+    if (clearBtn) clearBtn.classList.toggle('visible', Boolean(queryText.trim()));
+    if (summary) summary.textContent = `${items.length} ${items.length === 1 ? 'camada' : 'camadas'}`;
+    if (!box) return;
 
     if (!items.length) {
-      box.innerHTML =
-        '<div class="dl-card"><div class="dl-card-info"><div class="dl-card-title">Nenhum resultado encontrado</div><div class="dl-card-what">Tente buscar por outro termo ou clique em "Todas as origens" / "Todas as Categorias".</div></div></div>';
+      box.innerHTML = `<div class="dl-empty">Nenhuma camada encontrada para o filtro informado.</div>`;
       return;
     }
 
     box.innerHTML = items
       .map((it) => {
-        const badge = Meta.getSourceBadgeMeta(it.sourceClass);
-        const actions = [];
-        if (it.kind === 'layer') {
-          actions.push(`<a class="gp-btn primary" href="index.html?layer=${encodeURIComponent(it.id)}" data-open-map-layer="${esc(it.id)}">Ver no Mapa ↗</a>`);
-        } else if (it.kind === 'basemap') {
-          actions.push(`<a class="gp-btn primary" href="index.html?basemap=${encodeURIComponent(it.id)}" data-open-map-basemap="${esc(it.id)}">Abrir Base ↗</a>`);
-        }
-        actions.push(`<button class="gp-btn" data-dl-meta="${esc(it.id)}">ⓘ Metadados</button>`);
+        let primaryActionHtml = '';
         if (it.redistributable && it.cfg.localFile) {
-          actions.push(`<a class="gp-btn" href="${esc(it.cfg.localFile)}" download>GeoJSON ↓</a>`);
-          actions.push(`<button class="gp-btn" data-dl-csv="${esc(it.id)}">CSV ↓</button>`);
-        } else if (it.kind !== 'doc') {
-          actions.push(`<span class="gp-src-pill src-cientifica" title="Serviço online não redistribuível em pacote local">Somente visualização</span>`);
-        }
-        const extUrl = it.cfg.officialUrl || it.cfg.externalUrl || (it.kind === 'doc' ? it.cfg.externalUrl : '');
-        if (extUrl) {
-          actions.push(`<a class="gp-btn" href="${esc(extUrl)}" target="_blank" rel="noopener">${it.kind === 'doc' ? 'Abrir PDF ↗' : 'Oficial ↗'}</a>`);
+          const fmtLabel = it.kind === 'doc' ? (it.cfg.downloadLabel || 'JSON') : 'GEOJSON';
+          primaryActionHtml = `<a class="dl-act-btn" href="${esc(it.cfg.localFile)}" download>${esc(fmtLabel)}</a>`;
+        } else if (it.kind === 'layer') {
+          primaryActionHtml = `<a class="dl-act-btn" href="index.html?layer=${encodeURIComponent(it.id)}">MAPA</a>`;
+        } else if (it.kind === 'basemap') {
+          primaryActionHtml = `<a class="dl-act-btn" href="index.html?basemap=${encodeURIComponent(it.id)}">MAPA</a>`;
+        } else if (it.cfg.externalUrl) {
+          primaryActionHtml = `<a class="dl-act-btn" href="${esc(it.cfg.externalUrl)}" target="_blank" rel="noopener">${esc(it.cfg.downloadLabel || 'ACESSAR')}</a>`;
         }
 
         return `
-          <div class="dl-card">
-            <div class="dl-card-info">
-              <div class="dl-card-title">
-                <span>${esc(it.name)}</span>
-                <span class="gp-src-pill ${badge.cls}">${esc(badge.label)}</span>
-              </div>
-              <div class="dl-card-what"><b>O que é isto?</b> ${esc(it.whatIsThis)}</div>
-              <div class="dl-card-meta">
-                <span><b>Categoria:</b> ${esc(it.groupName)}</span>
-                <span><b>Órgão / Origem:</b> ${esc(it.orgao)}</span>
-                <span><b>Formato:</b> ${esc(it.format)}</span>
-              </div>
+          <div class="dl-row">
+            <div class="dl-row-name">${esc(it.displayLine)}</div>
+            <div class="dl-action-group">
+              ${primaryActionHtml}
+              <button type="button" class="dl-act-btn" data-dl-meta="${esc(it.id)}">METADADOS</button>
             </div>
-            <div class="dl-card-actions">${actions.join('')}</div>
           </div>`;
       })
       .join('');
@@ -247,22 +319,18 @@
     if (!it || !it.redistributable || !it.cfg.localFile) return;
 
     let gj = null;
-    if (layerId === 'limite_municipal_ibge' && window.ARAQUARI_LIMIT_GEOJSON) {
-      gj = window.ARAQUARI_LIMIT_GEOJSON;
-    } else if (it.cfg.bundleKey && window.GEOAMESC_BUNDLE?.[it.cfg.bundleKey]) {
+    if (it.cfg.bundleKey && window.GEOAMESC_BUNDLE?.[it.cfg.bundleKey]) {
       gj = window.GEOAMESC_BUNDLE[it.cfg.bundleKey];
     } else {
       try {
         const r = await fetch(it.cfg.localFile);
         if (r.ok) gj = await r.json();
       } catch {
-        const gh = `https://eriksdhoffmann.github.io/Geoportal-Região AMESC/${it.cfg.localFile}`;
-        const r2 = await fetch(gh);
-        if (r2.ok) gj = await r2.json();
+        // ignore
       }
     }
     if (!gj?.features?.length) {
-      alert('Não foi possível carregar os dados para gerar o CSV neste ambiente.');
+      alert('Não foi possível carregar os registros desta camada para exportar em CSV.');
       return;
     }
 
@@ -290,7 +358,7 @@
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `jacinto_machado_${layerId}.csv`;
+    a.download = `amesc_${layerId}.csv`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
@@ -298,135 +366,85 @@
   function openDlMetadataModal(itemId) {
     const it = ALL_ITEMS.find((x) => x.id === itemId);
     if (!it) return;
-    const badge = Meta.getSourceBadgeMeta(it.sourceClass);
     const meta = it.metaEntry.metadata;
-    document.getElementById('dlModalTitle').textContent = `Metadados — ${meta.nome_camada}`;
+    document.getElementById('dlModalTitle').textContent = it.cleanName;
+
     const rowsHtml = Meta.FIELD_LABELS.map(([k, lbl]) => {
-      const val = meta[k] || 'Não informado pela fonte';
+      const val = meta[k] || 'Não informado';
       const isUrl = typeof val === 'string' && /^https?:\/\//i.test(val);
-      return `<tr><th>${esc(lbl)}</th><td>${isUrl ? `<a href="${esc(val)}" target="_blank" rel="noopener">${esc(val)} ↗</a>` : esc(val)}</td></tr>`;
+      return `<tr><th>${esc(lbl)}</th><td>${isUrl ? `<a href="${esc(val)}" target="_blank" rel="noopener" style="color:#1d8ac7;word-break:break-all">${esc(val)}</a>` : esc(val)}</td></tr>`;
     }).join('');
-    document.getElementById('dlModalBody').innerHTML = `
-      <div class="gp-meta-hero">
-        <span class="gp-src-pill ${badge.cls}">${esc(badge.label)}</span>
-        <div style="margin-top:6px;font-size:13.5px"><b>O que é isto?</b> ${esc(it.whatIsThis)}</div>
-      </div>
+
+    const actionBtns = [];
+    if (it.redistributable && it.cfg.localFile) {
+      actionBtns.push(`<a class="dl-meta-btn primary" href="${esc(it.cfg.localFile)}" download>Baixar arquivo (${esc(it.kind === 'doc' ? 'JSON' : 'GeoJSON')})</a>`);
+      if (it.kind === 'layer') {
+        actionBtns.push(`<button type="button" class="dl-meta-btn" data-modal-csv="${esc(it.id)}">Exportar tabela (CSV)</button>`);
+      }
+    }
+    if (it.kind === 'layer') {
+      actionBtns.push(`<a class="dl-meta-btn" href="index.html?layer=${encodeURIComponent(it.id)}">Visualizar no mapa</a>`);
+    } else if (it.kind === 'basemap') {
+      actionBtns.push(`<a class="dl-meta-btn" href="index.html?basemap=${encodeURIComponent(it.id)}">Visualizar no mapa</a>`);
+    } else if (it.cfg.externalUrl) {
+      actionBtns.push(`<a class="dl-meta-btn primary" href="${esc(it.cfg.externalUrl)}" target="_blank" rel="noopener">Acessar fonte oficial</a>`);
+    }
+
+    const bodyEl = document.getElementById('dlModalBody');
+    bodyEl.innerHTML = `
+      <div class="dl-meta-actions">${actionBtns.join('')}</div>
       <table class="gp-meta-table">${rowsHtml}</table>
     `;
+    bodyEl.querySelector('[data-modal-csv]')?.addEventListener('click', (e) => {
+      downloadCsvForLayer(e.currentTarget.dataset.modalCsv);
+    });
     document.getElementById('dlModalBackdrop').classList.add('open');
   }
 
-  searchInput.addEventListener('input', () => {
+  searchInput?.addEventListener('input', () => {
     queryText = searchInput.value;
-    renderSidebar();
     renderResults();
   });
-  document.getElementById('dlSearchClear').addEventListener('click', () => {
+
+  clearBtn?.addEventListener('click', () => {
+    if (!searchInput) return;
     searchInput.value = '';
     queryText = '';
-    renderSidebar();
     renderResults();
     searchInput.focus();
   });
-  document.getElementById('dlCategoryList').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-cat-id]');
+
+  document.getElementById('dlCategoryList')?.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-sec-id]');
     if (!b) return;
-    selectedCat = b.dataset.catId;
+    selectedSectionId = b.dataset.secId;
     renderSidebar();
+    renderHeader();
     renderResults();
   });
-  document.getElementById('dlSourceFilters').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-src]');
-    if (!b) return;
-    selectedSrc = b.dataset.src;
-    document.querySelectorAll('#dlSourceFilters .dl-chip').forEach((c) => c.classList.toggle('active', c.dataset.src === selectedSrc));
-    renderSidebar();
-    renderResults();
-  });
-  function getAvailableMapOpener() {
-    try {
-      if (window.opener && !window.opener.closed && window.opener.GeoPortalMapNav) {
-        return window.opener;
-      }
-    } catch {
-      // Cross-origin ou opener indisponível
-    }
-    return null;
-  }
 
-  function handleReturnToMapClick(e, { layerId = '', basemapId = '' } = {}) {
-    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
-      return;
-    }
-    const opener = getAvailableMapOpener();
-    if (!opener) {
-      // Sem aba original disponível: navega na aba atual pelo href do link
-      return;
-    }
-    e.preventDefault();
-    try {
-      if (layerId) opener.GeoPortalMapNav.activateLayer(layerId);
-      else if (basemapId) opener.GeoPortalMapNav.activateBasemap(basemapId);
-      else opener.GeoPortalMapNav.focusMap();
-    } catch {
-      const link = e.target.closest('a[href]');
-      if (link) window.location.href = link.href;
-      return;
-    }
-    try {
-      opener.focus();
-    } catch {
-      // ignore
-    }
-    try {
-      window.close();
-    } catch {
-      // ignore
-    }
-  }
-
-  const dispatchReturnToMap = (e, opts) => {
-    if (typeof window.__geoHandleReturnToMapClick === 'function') {
-      window.__geoHandleReturnToMapClick(e, opts);
-      return;
-    }
-    handleReturnToMapClick(e, opts);
-  };
-
-  if (typeof window.__geoHandleReturnToMapClick !== 'function') {
-    document.querySelectorAll('[data-return-to-map]').forEach((el) => {
-      el.addEventListener('click', (e) => handleReturnToMapClick(e));
-    });
-  }
-
-  document.getElementById('dlResults').addEventListener('click', (e) => {
-    const mapLayerLink = e.target.closest('[data-open-map-layer]');
-    if (mapLayerLink) {
-      dispatchReturnToMap(e, { layerId: mapLayerLink.dataset.openMapLayer });
-      return;
-    }
-    const mapBmLink = e.target.closest('[data-open-map-basemap]');
-    if (mapBmLink) {
-      dispatchReturnToMap(e, { basemapId: mapBmLink.dataset.openMapBasemap });
-      return;
-    }
+  document.getElementById('dlResults')?.addEventListener('click', (e) => {
     const mb = e.target.closest('[data-dl-meta]');
     if (mb) {
       openDlMetadataModal(mb.dataset.dlMeta);
-      return;
-    }
-    const cb = e.target.closest('[data-dl-csv]');
-    if (cb) {
-      downloadCsvForLayer(cb.dataset.dlCsv);
     }
   });
-  document.getElementById('dlModalClose').addEventListener('click', () => {
-    document.getElementById('dlModalBackdrop').classList.remove('open');
+
+  document.getElementById('dlModalClose')?.addEventListener('click', () => {
+    document.getElementById('dlModalBackdrop')?.classList.remove('open');
   });
-  document.getElementById('dlModalBackdrop').addEventListener('click', (e) => {
+
+  document.getElementById('dlModalBackdrop')?.addEventListener('click', (e) => {
     if (e.target.id === 'dlModalBackdrop') e.target.classList.remove('open');
   });
 
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.getElementById('dlModalBackdrop')?.classList.remove('open');
+    }
+  });
+
   renderSidebar();
+  renderHeader();
   renderResults();
 })();

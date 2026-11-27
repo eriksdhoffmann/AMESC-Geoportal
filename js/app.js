@@ -2036,5 +2036,11 @@
   });
 
   renderLayerDrawer();
+
+  // Suporte a ?nav=home|socio|help vindo da página de Downloads
+  const initNav = new URLSearchParams(window.location.search).get('nav');
+  if (initNav && ['home', 'socio', 'help'].includes(initNav)) {
+    openNavSection(initNav);
+  }
 })();
 
