@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "test_geoson",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{"type":"Feature","properties":{"fid":1,"id":1},"geometry":{"type":"MultiPolygon","coordinates":[[[[-49.892437823894596,-29.039952556921072],[-49.927009195425732,-29.075737438283461],[-49.934117553249017,-29.021817941123608],[-49.874272278368466,-29.003337876028578],[-49.892437823894596,-29.039952556921072]]]]}}
+]
+}
