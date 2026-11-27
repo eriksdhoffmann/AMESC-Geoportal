@@ -574,7 +574,7 @@ window.GeoLayerEngine = (() => {
     map.createPane('paneBasemapMunicipal').style.zIndex = 210;
     map.createPane('paneBasemapLabels').style.zIndex = 218;
     map.createPane('paneSwipeRight').style.zIndex = 222;
-    map.createPane('paneMunicipalMask').style.zIndex = 620;
+    map.createPane('paneMunicipalMask').style.zIndex = 645;
     map.getPane('paneMunicipalMask').style.pointerEvents = 'none';
     map.createPane('paneToolsOverlay').style.zIndex = 650;
 
