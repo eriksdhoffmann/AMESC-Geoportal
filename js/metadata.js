@@ -173,7 +173,9 @@ window.GeoMetadata = (() => {
     const isAneel = layerId.includes('aneel');
     const isCnes = layerId.includes('cnes');
     const isSgb = layerId.includes('sgb') || layerId.includes('siagas');
-    const org = isOsm ? 'OpenStreetMap (colaborativo)'
+    const isCustom = Boolean(fallbackCfg.custom) || layerId.startsWith('test_');
+    const org = isCustom ? 'AMESC / Camada Personalizada (QGIS)'
+      : isOsm ? 'OpenStreetMap (colaborativo)'
       : isFbds ? 'FBDS — Fundação Brasileira para o Desenvolvimento Sustentável'
       : isIma ? 'IMA-SC / MMA-ICMBio'
       : isSigsc ? 'Governo de SC — SDS / SIGSC'
@@ -184,7 +186,8 @@ window.GeoMetadata = (() => {
       : isCnes ? 'Ministério da Saúde / DataSUS (CNES)'
       : isSgb ? 'SGB / CPRM — Serviço Geológico do Brasil'
       : 'IBGE — Instituto Brasileiro de Geografia e Estatística';
-    const url = isOsm ? 'https://www.openstreetmap.org/'
+    const url = isCustom ? 'https://eriksdhoffmann.github.io/AMESC-Geoportal/'
+      : isOsm ? 'https://www.openstreetmap.org/'
       : isFbds ? 'https://geo.fbds.org.br/SC/'
       : isIma ? 'https://geo.ima.sc.gov.br/'
       : isSigsc ? 'https://sigsc.sc.gov.br/'
@@ -195,7 +198,7 @@ window.GeoMetadata = (() => {
       : isSgb ? 'https://geoservicos.sgb.gov.br/'
       : 'https://www.ibge.gov.br/';
     return makeMeta({
-      sourceClass: isOsm ? 'Colaborativa' : (isFbds ? 'Científica' : 'Oficial'),
+      sourceClass: isCustom ? 'Científica' : (isOsm ? 'Colaborativa' : (isFbds ? 'Científica' : 'Oficial')),
       nome_camada: fallbackCfg.name || layerId,
       whatIsThis: fallbackCfg.description || fallbackCfg.name || layerId,
       categoria: fallbackCfg.groupName || fallbackCfg.group || 'Geoinformação Regional AMESC',

@@ -14,7 +14,7 @@ window.GeoCatalog = (() => {
     [-29.3551, -50.1775],
     [-28.6098, -49.2901],
   ];
-  
+
   // Paletas oficiais verificadas sobre os atributos reais das bases regionais da AMESC
   const FBDS_USO_COLORS = {
     'formação florestal': '#15803d',
@@ -746,6 +746,31 @@ window.GeoCatalog = (() => {
           defaultOpacity: 0.9,
           style: { color: '#16a34a', weight: 2.2, dashArray: '5 4' },
           description: 'Trilhas de ecoturismo na Serra Geral e litoral do Extremo Sul Catarinense.',
+        },
+      ],
+    },
+    {
+      id: 'camadas_personalizadas',
+      name: '9. Camadas Personalizadas & Estudos Técnicos (QGIS)',
+      expanded: false,
+      layers: [
+        // Adicione novas camadas GeoJSON exportadas do QGIS dentro deste array "layers: [ ... ]"
+        {
+          id: 'test_geoson',
+          name: 'Área de Teste (Jacinto Machado)',
+          localFile: 'data/test_geoson.geojson',
+          geomType: 'polygon',
+          custom: true,
+          opacity: 0.5,
+          defaultOpacity: 0.5,
+          style: {
+            color: '#dc2626',
+            weight: 2.2,
+            fillColor: '#ef4444',
+            fillOpacity: 0.45,
+            dashArray: null,
+          },
+          description: 'Camada de teste exportada do QGIS (Jacinto Machado).',
         },
       ],
     },
