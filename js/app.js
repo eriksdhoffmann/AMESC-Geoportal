@@ -304,7 +304,19 @@
 
     const headerSel = document.getElementById('headerMunSelect');
     if (headerSel) {
-      headerSel.value = codes.length === 1 ? codes[0] : 'ALL';
+      let multiOpt = headerSel.querySelector('option[value="__MULTI__"]');
+      if (codes.length > 1) {
+        if (!multiOpt) {
+          multiOpt = document.createElement('option');
+          multiOpt.value = '__MULTI__';
+          headerSel.insertBefore(multiOpt, headerSel.firstChild);
+        }
+        multiOpt.textContent = `${codes.length} municípios selecionados`;
+        headerSel.value = '__MULTI__';
+      } else {
+        if (multiOpt) multiOpt.remove();
+        headerSel.value = codes.length === 1 ? codes[0] : 'ALL';
+      }
     }
 
     if (zoom) fitSelectedMunicipalities(codes);
@@ -331,7 +343,10 @@
       opt.textContent = m.nome;
       sel.appendChild(opt);
     }
-    sel.addEventListener('change', () => selectMunicipality(sel.value));
+    sel.addEventListener('change', () => {
+      if (sel.value === '__MULTI__') return;
+      selectMunicipality(sel.value);
+    });
   })();
 
   function renderMunicipiosTab(container) {
@@ -357,7 +372,7 @@
               <span><b>CNES:</b> ${m.cnes_ativos || 0}</span>
             </div>
             <div class="gp-mun-card-actions">
-              <button class="gp-opt-btn" data-pick-mun="${m.cd_mun}" style="${isSel ? 'background:#033c8e;color:#fff;border-color:#033c8e' : ''}">${isSel ? '✓ Selecionado' : 'Selecionar'}</button>
+              <button type="button" class="gp-opt-btn" style="${isSel ? 'background:#033c8e;color:#fff;border-color:#033c8e' : ''}">${isSel ? '✓ Selecionado' : 'Selecionar'}</button>
             </div>
           </div>`;
       })

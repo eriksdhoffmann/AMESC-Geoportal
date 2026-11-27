@@ -637,6 +637,7 @@ window.GeoLayerEngine = (() => {
         stroke: false,
         fillColor: '#ffffff',
         fillOpacity: 1,
+        fillRule: 'evenodd',
         interactive: false,
       }).addTo(group);
 
