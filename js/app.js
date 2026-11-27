@@ -276,29 +276,50 @@
     return (window.AMESC_INDICADORES?.municipios || []).slice().sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
   }
 
-  function selectMunicipality(cdMun, { zoom = true } = {}) {
-    const code = cdMun || 'ALL';
-    engine.setSelectedMunicipality(code);
+  function fitSelectedMunicipalities(codes) {
+    if (!codes.length) {
+      map.fitBounds(AMESC_BOUNDS, { paddingTopLeft: [56, 22], paddingBottomRight: [window.innerWidth <= 760 ? 32 : 390, 40] });
+      return;
+    }
+    const list = getAmsecMunicipiosList().filter((m) => codes.includes(String(m.cd_mun)) && m.bounds);
+    if (!list.length) return;
+    let minLat = 90, minLon = 180, maxLat = -90, maxLon = -180;
+    for (const m of list) {
+      minLat = Math.min(minLat, m.bounds[0][0]);
+      minLon = Math.min(minLon, m.bounds[0][1]);
+      maxLat = Math.max(maxLat, m.bounds[1][0]);
+      maxLon = Math.max(maxLon, m.bounds[1][1]);
+    }
+    map.fitBounds([[minLat, minLon], [maxLat, maxLon]], {
+      paddingTopLeft: [60, 30],
+      paddingBottomRight: [window.innerWidth <= 760 ? 32 : 400, 46],
+    });
+  }
+
+  function selectMunicipality(cdMun, { zoom = true, toggle = false } = {}) {
+    let codes = [];
+    if (toggle && cdMun && cdMun !== 'ALL') {
+      codes = engine.toggleSelectedMunicipality(cdMun);
+    } else {
+      engine.setSelectedMunicipality(cdMun || 'ALL');
+      codes = engine.getSelectedMunicipalities();
+    }
 
     const headerSel = document.getElementById('headerMunSelect');
-    if (headerSel && headerSel.value !== code) headerSel.value = code;
+    if (headerSel) {
+      headerSel.value = codes.length === 1 ? codes[0] : 'ALL';
+    }
 
-    const scopeEl = document.getElementById('headerActiveScope');
-    if (code === 'ALL') {
-      if (scopeEl) scopeEl.textContent = 'Mosaico Integrado • 15 Municípios';
-      if (zoom) {
-        map.fitBounds(AMESC_BOUNDS, { paddingTopLeft: [56, 22], paddingBottomRight: [window.innerWidth <= 760 ? 32 : 390, 40] });
-      }
-      showToast('Exibindo o Mosaico Integrado dos 15 municípios da AMESC.', 'info');
+    if (zoom) fitSelectedMunicipalities(codes);
+
+    if (codes.length === 0) {
+      showToast('Exibindo todos os 15 municípios da AMESC.', 'info');
+    } else if (codes.length === 1) {
+      const m = getAmsecMunicipiosList().find((x) => String(x.cd_mun) === codes[0]);
+      if (m) showToast(`Selecionado: ${m.nome} (IBGE ${m.cd_mun})`, 'success');
     } else {
-      const m = getAmsecMunicipiosList().find((x) => String(x.cd_mun) === String(code));
-      if (m) {
-        if (scopeEl) scopeEl.textContent = `${m.nome} • IBGE ${m.cd_mun}`;
-        if (zoom && m.bounds) {
-          map.fitBounds(m.bounds, { paddingTopLeft: [60, 30], paddingBottomRight: [window.innerWidth <= 760 ? 32 : 400, 46] });
-        }
-        showToast(`Município selecionado: ${m.nome} (IBGE ${m.cd_mun})`, 'success');
-      }
+      const names = getAmsecMunicipiosList().filter((x) => codes.includes(String(x.cd_mun))).map((x) => x.nome);
+      showToast(`${codes.length} municípios selecionados: ${names.join(', ')}`, 'success');
     }
     renderLayerDrawer();
   }
@@ -317,7 +338,7 @@
   })();
 
   function renderMunicipiosTab(container) {
-    const cur = engine.getSelectedMunicipality();
+    const selList = engine.getSelectedMunicipalities();
     const list = getAmsecMunicipiosList();
     const q = searchFilterText.trim().toLowerCase();
     const filtered = q ? list.filter((m) => m.nome.toLowerCase().includes(q) || m.cd_mun.includes(q)) : list;
@@ -325,7 +346,7 @@
 
     const cards = filtered
       .map((m) => {
-        const isSel = String(cur) === String(m.cd_mun);
+        const isSel = selList.includes(String(m.cd_mun));
         const rigeoPdf = m.rigeo?.pdf_url;
         return `
           <div class="gp-mun-card ${isSel ? 'active' : ''}" data-pick-mun="${m.cd_mun}">
@@ -339,7 +360,7 @@
               <span><b>CNES:</b> ${m.cnes_ativos || 0}</span>
             </div>
             <div class="gp-mun-card-actions">
-              <button class="gp-opt-btn" data-pick-mun="${m.cd_mun}">${isSel ? '✓ Selecionado' : 'Focar & Recortar'}</button>
+              <button class="gp-opt-btn" data-pick-mun="${m.cd_mun}" style="${isSel ? 'background:#033c8e;color:#fff;border-color:#033c8e' : ''}">${isSel ? '✓ Selecionado' : 'Selecionar'}</button>
               ${rigeoPdf ? `<a class="gp-opt-btn" href="${escapeHtml(rigeoPdf)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Carta SGB ↗</a>` : ''}
             </div>
           </div>`;
@@ -349,8 +370,8 @@
     container.innerHTML = `
       <div class="gp-mun-list">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px">
-          <span style="font-size:11.5px;font-weight:700;color:#475569">Clique em um município para focar e recortar:</span>
-          ${cur !== 'ALL' ? `<button class="gp-opt-btn" id="btnResetAmsecMosaic" style="background:#033c8e;color:#fff;border-color:#033c8e">Ver Todos (15)</button>` : ''}
+          <span style="font-size:11.5px;font-weight:700;color:#475569">${selList.length ? `${selList.length} selecionado(s) — clique para somar/remover:` : 'Clique em Selecionar para somar municípios:'}</span>
+          ${selList.length ? `<button class="gp-opt-btn" id="btnResetAmsecMosaic" style="background:#033c8e;color:#fff;border-color:#033c8e">Ver Todos (15)</button>` : ''}
         </div>
         ${cards}
       </div>
@@ -359,7 +380,7 @@
     container.querySelectorAll('[data-pick-mun]').forEach((el) => {
       el.addEventListener('click', (e) => {
         if (e.target.closest('a')) return;
-        selectMunicipality(el.dataset.pickMun);
+        selectMunicipality(el.dataset.pickMun, { toggle: true });
       });
     });
   }

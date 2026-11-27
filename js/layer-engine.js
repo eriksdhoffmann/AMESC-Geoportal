@@ -596,19 +596,22 @@ window.GeoLayerEngine = (() => {
 
     // ---- Máscara Oficial do Limite da região AMESC (AMESC 15 Municípios) ----
     let municipalClipEnabled = true;
-    let selectedMunCode = 'ALL';
+    let selectedMunCodes = new Set(); // empty = ALL 15 municipalities
     let municipalMaskLayer = null;
 
     function buildMunicipalMask() {
-      let geom = null;
-      if (selectedMunCode !== 'ALL' && window.AMESC_MUNICIPIOS_GEOJSON?.features) {
-        const feat = window.AMESC_MUNICIPIOS_GEOJSON.features.find((f) => String(f.properties?.CD_MUN) === String(selectedMunCode));
-        if (feat?.geometry) geom = feat.geometry;
+      const geoms = [];
+      if (selectedMunCodes.size > 0 && window.AMESC_MUNICIPIOS_GEOJSON?.features) {
+        for (const feat of window.AMESC_MUNICIPIOS_GEOJSON.features) {
+          if (selectedMunCodes.has(String(feat.properties?.CD_MUN)) && feat.geometry) {
+            geoms.push(feat.geometry);
+          }
+        }
       }
-      if (!geom) {
+      if (!geoms.length) {
         const gj = window.AMESC_LIMIT_GEOJSON;
         if (!gj?.features?.[0]?.geometry) return null;
-        geom = gj.features[0].geometry;
+        geoms.push(gj.features[0].geometry);
       }
       const worldRing = [
         [-85, -180],
@@ -618,10 +621,12 @@ window.GeoLayerEngine = (() => {
         [-85, -180],
       ];
       const holes = [];
-      const polys = geom.type === 'MultiPolygon' ? geom.coordinates : [geom.coordinates];
-      for (const poly of polys) {
-        if (poly[0]) {
-          holes.push(poly[0].map(([lon, lat]) => [lat, lon]));
+      for (const geom of geoms) {
+        const polys = geom.type === 'MultiPolygon' ? geom.coordinates : [geom.coordinates];
+        for (const poly of polys) {
+          if (poly[0]) {
+            holes.push(poly[0].map(([lon, lat]) => [lat, lon]));
+          }
         }
       }
       const maskSvg = L.svg({ pane: 'paneMunicipalMask', padding: 1.0 });
@@ -675,8 +680,15 @@ window.GeoLayerEngine = (() => {
       callbacks.onStateChange?.();
     }
 
-    function setSelectedMunicipality(cdMun) {
-      selectedMunCode = cdMun || 'ALL';
+    function setSelectedMunicipality(cdMunOrList) {
+      selectedMunCodes.clear();
+      if (Array.isArray(cdMunOrList)) {
+        for (const c of cdMunOrList) {
+          if (c && c !== 'ALL') selectedMunCodes.add(String(c));
+        }
+      } else if (cdMunOrList && cdMunOrList !== 'ALL') {
+        selectedMunCodes.add(String(cdMunOrList));
+      }
       if (municipalMaskLayer && map.hasLayer(municipalMaskLayer)) {
         map.removeLayer(municipalMaskLayer);
       }
@@ -688,8 +700,24 @@ window.GeoLayerEngine = (() => {
       callbacks.onStateChange?.();
     }
 
+    function toggleSelectedMunicipality(cdMun) {
+      const code = String(cdMun || '');
+      if (!code || code === 'ALL') {
+        setSelectedMunicipality('ALL');
+        return [];
+      }
+      if (selectedMunCodes.has(code)) selectedMunCodes.delete(code);
+      else selectedMunCodes.add(code);
+      setSelectedMunicipality([...selectedMunCodes]);
+      return [...selectedMunCodes];
+    }
+
     function getSelectedMunicipality() {
-      return selectedMunCode;
+      return selectedMunCodes.size === 0 ? 'ALL' : (selectedMunCodes.size === 1 ? [...selectedMunCodes][0] : [...selectedMunCodes]);
+    }
+
+    function getSelectedMunicipalities() {
+      return [...selectedMunCodes];
     }
 
     function isMunicipalClipEnabled() {
@@ -1243,29 +1271,28 @@ window.GeoLayerEngine = (() => {
     }
 
     function filterGeoJsonBySelectedMunicipality(geojson) {
-      if (selectedMunCode === 'ALL' || !geojson?.features?.length) return geojson;
-      const selFeat = window.AMESC_MUNICIPIOS_GEOJSON?.features?.find(
-        (f) => String(f.properties?.CD_MUN) === String(selectedMunCode)
+      if (selectedMunCodes.size === 0 || !geojson?.features?.length) return geojson;
+      const selFeats = (window.AMESC_MUNICIPIOS_GEOJSON?.features || []).filter(
+        (f) => selectedMunCodes.has(String(f.properties?.CD_MUN)) && f.geometry
       );
-      if (!selFeat?.geometry) return geojson;
-      const selCode = String(selectedMunCode);
-      const selName = normMunName(selFeat.properties?.NM_MUN);
-      const munBbox = computeGeomBbox(selFeat.geometry);
+      if (!selFeats.length) return geojson;
+      const selNames = new Set(selFeats.map((f) => normMunName(f.properties?.NM_MUN)));
+      const selBoxes = selFeats.map((f) => ({ geom: f.geometry, bbox: computeGeomBbox(f.geometry) }));
 
       const out = [];
       for (const f of geojson.features) {
         const p = f.properties || {};
         const pCode = p.CD_MUN ?? p.cd_mun;
         if (pCode !== undefined && pCode !== null && String(pCode).trim() !== '') {
-          if (String(pCode).trim() === selCode) out.push(f);
+          if (selectedMunCodes.has(String(pCode).trim())) out.push(f);
           continue;
         }
         const pName = p.NM_MUN ?? p.nm_mun ?? p.MUNICIPIO ?? p.municipio;
         if (pName !== undefined && pName !== null && String(pName).trim() !== '') {
-          if (normMunName(pName) === selName) out.push(f);
+          if (selNames.has(normMunName(pName))) out.push(f);
           continue;
         }
-        if (featureIntersectsMun(f.geometry, selFeat.geometry, munBbox)) {
+        if (selBoxes.some((sb) => featureIntersectsMun(f.geometry, sb.geom, sb.bbox))) {
           out.push(f);
         }
       }
@@ -1734,7 +1761,9 @@ window.GeoLayerEngine = (() => {
       setMunicipalClip,
       isMunicipalClipEnabled,
       setSelectedMunicipality,
+      toggleSelectedMunicipality,
       getSelectedMunicipality,
+      getSelectedMunicipalities,
       enableLayer,
       disableLayer,
       toggleLayer,
