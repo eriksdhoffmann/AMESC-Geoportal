@@ -125,9 +125,6 @@
   // Inicialização padrão: Satélite HD (recortado ao limite oficial AMESC (15 Municípios)) + Limite + Bairros Oficiais
   engine.setBasemapActive('satelite_global', true, true);
   syncMapBackground();
-  engine.enableLayer('amesc_municipios');
-  engine.enableLayer('amesc_localidades_osm');
-  engine.enableLayer('amesc_setores_risco_sgb');
 
   // Deep-linking via ?layer=id1,id2 (ex: vindo de downloads.html)
   (() => {
@@ -361,7 +358,6 @@
             </div>
             <div class="gp-mun-card-actions">
               <button class="gp-opt-btn" data-pick-mun="${m.cd_mun}" style="${isSel ? 'background:#033c8e;color:#fff;border-color:#033c8e' : ''}">${isSel ? '✓ Selecionado' : 'Selecionar'}</button>
-              ${rigeoPdf ? `<a class="gp-opt-btn" href="${escapeHtml(rigeoPdf)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Carta SGB ↗</a>` : ''}
             </div>
           </div>`;
       })
@@ -1359,9 +1355,20 @@
       return;
     }
 
+    if (navId === 'home') {
+      modalBackdrop?.classList.remove('open');
+      setNavActive('map');
+      tools.disableSwipe();
+      engine.clearAllLayers();
+      engine.setBasemapActive('satelite_global', true, true);
+      selectMunicipality('ALL');
+      renderLayerDrawer();
+      return;
+    }
+
     modalBackdrop?.classList.add('open');
 
-    if (navId === 'home') {
+    if (false) {
       modalTitle.textContent = 'Geoportal Regional da AMESC — Visão Geral e Mapas Temáticos Integrados';
       const totalLayers = window.GeoCatalog.getAllLayers().length;
       modalBody.innerHTML = `
