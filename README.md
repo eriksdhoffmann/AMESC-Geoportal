@@ -2,7 +2,8 @@
 
 Plataforma web geoespacial integrada reunindo os **15 municípios da AMESC** em um mosaico contínuo e conectado com seleção individual por município (inspirada no portal de Divisas Intermunicipais da SEPLAN/SC e nos Geoportais de Araquari e Florianópolis).
 
-- **Acesso Online (GitHub Pages):** `https://eriksdhoffmann.github.io/AMESC-Geoportal/`
+- **Acesso Online (GitHub Pages):** https://eriksdhoffmann.github.io/AMESC-Geoportal/
+  
 - **Central de Downloads & Metadados:** `https://eriksdhoffmann.github.io/AMESC-Geoportal/downloads.html`
 - **Execução Local:** execute `ABRIR_GEOPORTAL_AMESC.bat` ou sirva a pasta via HTTP (`python -m http.server 8770`).
 
