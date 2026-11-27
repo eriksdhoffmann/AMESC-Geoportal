@@ -15,6 +15,21 @@ window.GeoCatalog = (() => {
     [-28.6098, -49.2901],
   ];
 
+        {
+          id: 'test_geoson',
+          name: 'Área de Teste (Jacinto Machado)',
+          localFile: 'data/test_geoson.geojson',
+          geomType: 'polygon',
+          opacity: 0.5, // transparência do preenchimento (0.0 a 1.0)
+          style: {
+            color: '#dc2626',     // cor da linha/borda (código Hex)
+            weight: 2.2,          // espessura da borda
+            fillColor: '#ef4444', // cor do preenchimento (código Hex)
+            dashArray: null,      // use '6 3' se quiser borda tracejada
+          },
+          description: 'Camada de teste exportada do QGIS.',
+        },
+  
   // Paletas oficiais verificadas sobre os atributos reais das bases regionais da AMESC
   const FBDS_USO_COLORS = {
     'formação florestal': '#15803d',
